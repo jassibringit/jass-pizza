@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jass Pizza — Check your date</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E0D0B}
+a{color:#C9A24A}a:hover{color:#E2C47A}
+label{font-size:14px;font-weight:700;letter-spacing:.5px}
+input,select,textarea{font:inherit;font-size:16px;color:#F4EEE2;background:#0E0D0B;border:1px solid rgba(201,162,74,0.4);border-radius:2px;padding:14px 16px;min-height:48px;box-sizing:border-box;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid #C9A24A;outline-offset:1px}
+</style>
+</helmet>
+<div style="font-family: 'DM Sans', sans-serif; color: #F4EEE2; background: #0E0D0B; min-height: 100vh">
+
+<header style="border-bottom: 1px solid rgba(201,162,74,0.25)">
+<div style="max-width: 1240px; margin: 0 auto; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+<a href="Main.dc.html" style="text-decoration: none; display: flex; flex-direction: column; line-height: 1">
+<span style="font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; letter-spacing: 3px; color: {{accent}}">JASS PIZZA</span>
+<span style="font-size: 11px; letter-spacing: 3px; color: #B8AF9E; margin-top: 6px">LIVE PIZZA CATERING</span>
+</a>
+<a href="Packages.dc.html" style="color: #F4EEE2; text-decoration: none; font-size: 15px; padding: 12px 0">← Back to packages</a>
+</div>
+</header>
+
+<div style="max-width: 1240px; margin: 0 auto; padding: 80px 24px 112px; display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start">
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 13px; letter-spacing: 3px; color: {{accent}}">CHECK YOUR DATE</span>
+<h1 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 600; font-size: 52px; line-height: 1.08">Tell us about your event</h1>
+<p style="margin: 0; color: #D9D1C2; font-size: 18px; line-height: 1.6">Two minutes now, a personal quote back to you, usually within 24 hours.</p>
+</div>
+
+<sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="border: 1px solid {{accent}}; background: #15130F; padding: 40px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 600; color: {{accent}}">Thank you, we've got it.</h2>
+<p style="margin: 0; color: #D9D1C2; line-height: 1.6">We'll check the date and send your quote by text or email. Want an answer sooner? Message us on Instagram at <a href="https://instagram.com/jass.pizza">@jass.pizza</a>.</p>
+<button type="button" onClick="{{ reset }}" style="align-self: flex-start; background: transparent; color: #F4EEE2; border: 1px solid {{accent}}; padding: 14px 22px; border-radius: 2px; font: inherit; cursor: pointer">Send another inquiry</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+<form style="display: flex; flex-direction: column; gap: 32px">
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px">
+<legend style="font-size: 14px; font-weight: 700; letter-spacing: .5px; margin-bottom: 14px">What are you celebrating?</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{ types }}" as="t" hint-placeholder-count="6">
+<button type="button" onClick="{{ t.pick }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}">{{ t.label }}</button>
+</sc-for>
+</div>
+</fieldset>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="date">Event date</label><input id="date" type="date"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="guests">Guest count</label><input id="guests" type="number" min="10" placeholder="e.g. 60"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="city">Venue city</label><input id="city" type="text" placeholder="e.g. Brampton"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="setting">Indoor or outdoor?</label><select id="setting"><option>Outdoor</option><option>Indoor</option><option>Not sure yet</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="start">Serving start time</label><input id="start" type="time"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="venue">Venue type</label><select id="venue"><option>Home / backyard</option><option>Banquet hall</option><option>Park or conservation area</option><option>Office</option><option>Other</option></select></div>
+</div>
+
+<div style="border-top: 1px solid rgba(201,162,74,0.25); padding-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="name">Your name</label><input id="name" type="text" autocomplete="name"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="phone">Phone</label><input id="phone" type="tel" autocomplete="tel"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="email">Email</label><input id="email" type="email" autocomplete="email"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="heard">How did you hear about us?</label><select id="heard"><option>Instagram</option><option>TikTok</option><option>Google</option><option>Friend or family</option><option>Attended an event</option></select></div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="notes">Anything else? (flavours, dietary needs, theme)</label><textarea id="notes" rows="4" placeholder="e.g. Mehndi in the backyard, mostly vegetarian, gold and ivory décor"></textarea></div>
+
+<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap">
+<button type="button" onClick="{{ submit }}" style="background: {{accent}}; color: #0E0D0B; border: 0; font: inherit; font-weight: 700; padding: 18px 34px; border-radius: 2px; font-size: 16px; cursor: pointer">Send my inquiry</button>
+<span style="color: #B8AF9E; font-size: 14px">No payment now. We'll confirm availability first.</span>
+</div>
+</form>
+</sc-if>
+</main>
+
+<aside style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<div style="border: 1px solid rgba(201,162,74,0.35); background: #15130F; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600">What happens next</h2>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 14px; color: #D9D1C2; line-height: 1.5">
+<li>We check your date and recommend a package.</li>
+<li>You get a personal quote by text or email.</li>
+<li>A 30% deposit locks it in.</li>
+<li>We handle the public-health notice and venue paperwork.</li>
+</ol>
+</div>
+<div style="border: 1px solid rgba(201,162,74,0.35); padding: 32px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'Playfair Display', serif; font-size: 22px; color: {{accent}}">Booking at least 15 days out?</span>
+<p style="margin: 0; color: #D9D1C2; line-height: 1.55">Peel Public Health needs notice for every event, so we can't take bookings closer than that.</p>
+</div>
+<div style="padding: 8px 0; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; color: #B8AF9E">Have a quick question first?</span>
+<a href="Assistant.dc.html" style="font-weight: 700; text-decoration: none; padding: 8px 0">Ask our assistant →</a>
+</div>
+</aside>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C9A24A","options":["#C9A24A","#D4AF37","#B8924A"]},"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { picked: 'Wedding / Mehndi', sent: false }; }
+renderVals() {
+const accent = this.props.accent ?? '#C9A24A';
+const labels = ['Wedding / Mehndi', 'Birthday', 'Anniversary', 'Corporate', 'Religious / Community', 'Other'];
+const types = labels.map((label) => {
+const on = this.state.picked === label;
+return {
+label,
+pressed: on ? 'true' : 'false',
+style: 'font: inherit; font-size: 15px; min-height: 48px; padding: 12px 20px; border-radius: 999px; cursor: pointer; border: 1px solid ' + accent + '; ' + (on ? 'background: ' + accent + '; color: #0E0D0B; font-weight: 700' : 'background: transparent; color: #F4EEE2'),
+pick: () => this.setState({ picked: label })
+};
+});
+return {
+accent,
+types,
+sent: this.state.sent,
+notSent: !this.state.sent,
+submit: () => this.setState({ sent: true }),
+reset: () => this.setState({ sent: false })
+};
+}
+}
+</script>
+</body>
+</html>

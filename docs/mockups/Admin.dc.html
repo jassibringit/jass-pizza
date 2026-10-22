@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jass Pizza — Owner dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E0D0B}
+a{color:#C9A24A}a:hover{color:#E2C47A}
+th{font-weight:500;color:#B8AF9E;font-size:13px;letter-spacing:.5px;text-align:left;padding:12px 16px;border-bottom:1px solid rgba(201,162,74,0.3)}
+td{padding:16px;border-bottom:1px solid rgba(201,162,74,0.15);font-size:15px;white-space:nowrap}
+</style>
+</helmet>
+<div style="font-family: 'DM Sans', sans-serif; color: #F4EEE2; background: #0E0D0B; min-height: 100vh; display: flex; flex-wrap: wrap">
+
+<nav aria-label="Dashboard" style="flex: 1 1 220px; max-width: 100%; box-sizing: border-box; padding: 28px 20px; border-right: 1px solid rgba(201,162,74,0.25); background: #0A0908; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; line-height: 1"><span style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; letter-spacing: 2px; color: #C9A24A">JASS PIZZA</span><span style="font-size: 11px; letter-spacing: 2px; color: #B8AF9E; margin-top: 6px">OWNER DASHBOARD</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<a href="#leads" style="color: #0E0D0B; background: #C9A24A; text-decoration: none; padding: 12px 14px; border-radius: 2px; font-weight: 700">Leads</a>
+<a href="#quote" style="color: #F4EEE2; text-decoration: none; padding: 12px 14px">Quote calculator</a>
+<a href="#reply" style="color: #F4EEE2; text-decoration: none; padding: 12px 14px">AI reply drafts</a>
+<a href="#calendar" style="color: #F4EEE2; text-decoration: none; padding: 12px 14px">Calendar &amp; notices</a>
+</div>
+<span style="margin-top: auto; font-size: 12px; color: #B8AF9E">Private · signed in as owner</span>
+</nav>
+
+<main style="flex: 999 1 640px; min-width: 0; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 6px"><h1 style="margin: 0; font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600">Good afternoon, Jassi</h1><span style="color: #B8AF9E; font-size: 14px">Sample data shown, real inquiries land here from the booking form</span></div>
+</div>
+
+<section aria-labelledby="notice-h" style="border: 1px solid #C9A24A; background: #1A1812; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 4px"><h2 id="notice-h" style="margin: 0; font-size: 16px; font-weight: 700; color: #C9A24A">Peel Public Health notice due</h2><span style="color: #D9D1C2">Mehndi on Sat Nov 14 · deposit received · notify by Thu Oct 29 (15 days out)</span></div>
+<button type="button" style="font: inherit; font-weight: 700; background: #C9A24A; color: #0E0D0B; border: 0; padding: 12px 20px; border-radius: 2px; min-height: 44px; cursor: pointer">Mark as sent</button>
+</section>
+
+<section id="leads" aria-labelledby="leads-h" style="border: 1px solid rgba(201,162,74,0.3); background: #15130F">
+<div style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap"><h2 id="leads-h" style="margin: 0; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600">Leads pipeline</h2><div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px"><span style="border: 1px solid rgba(201,162,74,0.5); padding: 6px 12px; border-radius: 999px">New</span><span style="border: 1px solid rgba(201,162,74,0.5); padding: 6px 12px; border-radius: 999px">Quoted</span><span style="border: 1px solid rgba(201,162,74,0.5); padding: 6px 12px; border-radius: 999px">Deposit paid</span><span style="border: 1px solid rgba(201,162,74,0.5); padding: 6px 12px; border-radius: 999px">Done</span></div></div>
+<div style="overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th scope="col">Client</th><th scope="col">Event</th><th scope="col">Date</th><th scope="col">Guests</th><th scope="col">City</th><th scope="col">Stage</th><th scope="col">Next step</th></tr></thead>
+<tbody>
+<tr><td>[Sample client A]</td><td>Mehndi</td><td>Sat Nov 14</td><td>60</td><td>Brampton</td><td><span style="background: #C9A24A; color: #0E0D0B; font-weight: 700; padding: 4px 10px; border-radius: 999px; font-size: 13px">Deposit paid</span></td><td>Send health notice</td></tr>
+<tr><td>[Sample client B]</td><td>Corporate lunch</td><td>Fri Nov 20</td><td>45</td><td>Mississauga</td><td><span style="border: 1px solid #C9A24A; padding: 4px 10px; border-radius: 999px; font-size: 13px">Quoted</span></td><td>Follow up Monday</td></tr>
+<tr><td>[Sample client C]</td><td>Birthday</td><td>Sun Dec 6</td><td>25</td><td>Caledon</td><td><span style="border: 1px dashed #B8AF9E; padding: 4px 10px; border-radius: 999px; font-size: 13px">New</span></td><td>Review AI draft</td></tr>
+<tr><td>[Sample client D]</td><td>Anniversary</td><td>Sat Dec 12</td><td>80</td><td>Vaughan</td><td><span style="border: 1px dashed #B8AF9E; padding: 4px 10px; border-radius: 999px; font-size: 13px">New</span></td><td>Indoor? Confirm oven plan</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px">
+
+<section id="quote" aria-labelledby="quote-h" style="border: 1px solid rgba(201,162,74,0.3); background: #15130F; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+<h2 id="quote-h" style="margin: 0; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600">Quote calculator</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="qp" style="font-size: 13px; color: #B8AF9E">Pizzas</label><input id="qp" type="number" value="35" style="font: inherit; color: #F4EEE2; background: #0E0D0B; border: 1px solid rgba(201,162,74,0.4); padding: 12px; min-height: 44px; box-sizing: border-box"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="qh" style="font-size: 13px; color: #B8AF9E">Helpers</label><input id="qh" type="number" value="1" style="font: inherit; color: #F4EEE2; background: #0E0D0B; border: 1px solid rgba(201,162,74,0.4); padding: 12px; min-height: 44px; box-sizing: border-box"></div>
+</div>
+<div style="display: flex; flex-direction: column; font-size: 15px">
+<div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(201,162,74,0.15)"><span style="color: #D9D1C2">35 pizzas × $[RATE]</span><span>$[X]</span></div>
+<div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(201,162,74,0.15)"><span style="color: #D9D1C2">Setup</span><span>$[X]</span></div>
+<div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(201,162,74,0.15)"><span style="color: #D9D1C2">1 helper</span><span>$[X]</span></div>
+<div style="display: flex; justify-content: space-between; padding: 14px 0 0; font-weight: 700; font-size: 18px"><span>Celebration · total</span><span style="color: #C9A24A">$[TOTAL]</span></div>
+<div style="display: flex; justify-content: space-between; padding: 6px 0 0; color: #B8AF9E; font-size: 14px"><span>30% deposit to hold date</span><span>$[DEPOSIT]</span></div>
+</div>
+<span style="font-size: 13px; color: #B8AF9E">Owner-only. Quotes are still given to clients personally.</span>
+</section>
+
+<section id="reply" aria-labelledby="reply-h" style="border: 1px solid rgba(201,162,74,0.3); background: #15130F; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap"><h2 id="reply-h" style="margin: 0; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600">AI reply draft</h2><span style="font-size: 12px; letter-spacing: 1px; color: #C9A24A">FOR [SAMPLE CLIENT C]</span></div>
+<p style="margin: 0; font-size: 14px; color: #B8AF9E">Written from the inquiry in your voice. Nothing sends until you approve.</p>
+<div style="background: #0E0D0B; border: 1px solid rgba(201,162,74,0.25); padding: 18px; line-height: 1.6; font-size: 15px; white-space: pre-line">Hi! Thanks for reaching out about the birthday on Dec 6!
+For about 25 guests our Intimate package is a great fit: 20–25 live pizzas, 3 flavours of your choice, and 1.5 hours of fresh pizza.
+Quick questions so I can send your quote: is it indoors or outdoors, and what time would you like serving to start?</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" style="font: inherit; font-weight: 700; background: #C9A24A; color: #0E0D0B; border: 0; padding: 12px 20px; border-radius: 2px; min-height: 44px; cursor: pointer">Approve &amp; send</button>
+<button type="button" style="font: inherit; background: transparent; color: #F4EEE2; border: 1px solid #C9A24A; padding: 12px 20px; border-radius: 2px; min-height: 44px; cursor: pointer">Edit</button>
+<button type="button" style="font: inherit; background: transparent; color: #F4EEE2; border: 1px solid rgba(201,162,74,0.4); padding: 12px 20px; border-radius: 2px; min-height: 44px; cursor: pointer">Regenerate</button>
+</div>
+</section>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
