@@ -7,7 +7,7 @@ const menu: MenuItem[] = [
   {
     title: "Classic Margherita",
     description: "Tomato sauce, fresh mozzarella, basil, olive oil.",
-    image:"/menu/margherita.png"
+    image: "/menu/margherita.png",
   },
   {
     title: "Cheese Pizza",
@@ -25,18 +25,18 @@ const menu: MenuItem[] = [
   {
     title: "Classic Pepperoni",
     description: "Tomato sauce, mozzarella, pepperoni.",
-    image:"/menu/pepperoni.png"
+    image: "/menu/pepperoni.png",
   },
   {
     title: "Tandoori Chicken Twist",
     description:
       "Tomato sauce, tandoori chicken, onions, cilantro, mozzarella.",
-      image:"/menu/chicken.png"
+    image: "/menu/chicken.png",
   },
   {
     title: "Garden Veggie Classic",
     description: "Tomato sauce, bell peppers, onions, mushrooms, mozzarella.",
-    image:"/menu/veggie.png"
+    image: "/menu/veggie.png",
   },
 ];
 
@@ -55,9 +55,15 @@ export function MenuSection() {
         <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
           The menu
         </p>
-        <h2 className="mt-4 font-display text-4xl leading-none font-semibold md:text-6xl">
-          pick your pies<span className="text-gold">.</span>
-        </h2>
+        <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
+          <h2 className="font-display text-4xl leading-none font-semibold md:text-6xl">
+            pick your pies<span className="text-gold">.</span>
+          </h2>
+          <p className="text-lg leading-relaxed text-ivory-muted md:max-w-sm md:text-right">
+            Every sauce and dough made in-house. Choose up to four for your
+            event.
+          </p>
+        </div>
 
         <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-16 md:gap-x-7 md:gap-y-14 lg:grid-cols-4">
           {menu.map((item) => (
