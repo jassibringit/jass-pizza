@@ -45,6 +45,7 @@ Content, validation and AI prompts must follow these rules.
   - **Garden Veggie Classic**: tomato sauce, bell peppers, onions, mushrooms, mozzarella.
 - Add-on: **Fresh-Filled Cannoli**: house-made ricotta filling, piped fresh at the event, finished with pistachio or chocolate chips.
 - Pizzas are made in two Gozney ovens. Never describe them as wood-fired.
+- The ovens run outdoors only. Every event needs an outdoor spot for them (patio, driveway, backyard), even if guests are indoors.
 - Dough and sauces are made in-house. Cannoli filling is house-made; the shells are not.
 - A 30% deposit holds the date.
 - Service area: Brampton, Peel and the GTA, with a travel fee outside Peel. No winter events.

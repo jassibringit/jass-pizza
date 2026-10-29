@@ -4,7 +4,7 @@ import { z } from "zod";
 import { format, parseISO } from "date-fns";
 import { Resend } from "resend";
 import { QuoteSchema, type QuoteErrors } from "@/lib/booking-schema";
-
+import BookingNotification from "@/emails/booking-notification"
 // What the action sends back to the form.
 export type BookState = {
   errors?: QuoteErrors;
@@ -19,12 +19,18 @@ export async function bookAction(
   formData: FormData,
 ): Promise<BookState> {
   const data = Object.fromEntries(formData);
+  console.log({data})
 
   // The real check: runs on the server, so it can't be skipped.
   const result = QuoteSchema.safeParse(data);
+ // honeypot pretend it worked
+  if(data.company){
+    return {success:true}
+  }
   if (!result.success) {
     return { errors: z.flattenError(result.error).fieldErrors };
   }
+
 
   // The checked, cleaned answers (guests is a number, text is trimmed).
   const booking = result.data;
@@ -39,15 +45,11 @@ Celebrating: ${booking.eventType}
 Date: ${eventDate}
 Guests: ${booking.guests}
 City: ${booking.city}
-Indoor/outdoor: ${booking.setting ?? "—"}
-Serving start: ${booking.startTime || "—"}
-Venue: ${booking.venueType ?? "—"}
 
 CONTACT
 Name: ${booking.name}
 Email: ${booking.email}
 Phone: ${booking.phone || "—"}
-Heard about us: ${booking.heardFrom ?? "—"}
 
 MESSAGE
 ${booking.message || "—"}
@@ -59,6 +61,7 @@ Hit reply to answer ${booking.name} directly.`;
     to: process.env.BOOKING_EMAIL!,
     replyTo: booking.email,
     subject: `New inquiry: ${booking.eventType}, ${eventDate}, ${booking.guests} guests`,
+    react : BookingNotification(booking),
     text,
   });
 
