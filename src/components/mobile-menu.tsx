@@ -53,7 +53,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
           </ul>
 
           <Link
-            href="/book"
+            href="#quote"
             onClick={close}
             className="mt-6 flex min-h-11 items-center justify-center rounded-full border border-gold px-5 py-3 text-[15px] text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >

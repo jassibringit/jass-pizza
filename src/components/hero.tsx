@@ -27,7 +27,7 @@ export function Hero() {
 
         <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
           <Link
-            href="/book"
+            href="#quote"
             className="inline-flex min-h-11 items-center rounded-full bg-primary px-7 py-4 font-bold text-primary-foreground transition-colors hover:bg-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
             Get a quote →

@@ -73,7 +73,7 @@ export function QuoteSection() {
             onChange={(e) => {
               clearError(e.target.name as keyof QuoteErrors);
             }}
-            className="mt-10 flex flex-col gap-10 md:mt-14"
+            className="mt-10 flex flex-col gap-4 md:mt-14"
           >
             <fieldset aria-describedby="eventType-error">
               <legend className={labelClass}>What are you celebrating?</legend>
@@ -115,7 +115,7 @@ export function QuoteSection() {
                 autoComplete="off"
               />
             </div>
-            <div className="grid gap-8 md:grid-cols-3 md:gap-6">
+            <div className="grid gap-2 md:grid-cols-3 md:gap-6">
               <EventDatePicker
                 error={errors.date?.[0]}
                 onPick={() => clearError("date")}
@@ -163,7 +163,7 @@ export function QuoteSection() {
                 />
                 <p
                   id="city-hint"
-                  className="px-5 text-sm text-muted-foreground"
+                  className="px-5 text-xs text-muted-foreground"
                 >
                   Our ovens run outdoors, so we&apos;ll need a spot like a
                   backyard, front yard, driveway or patio.
@@ -177,7 +177,7 @@ export function QuoteSection() {
             </div>
 
             {/* About you. Pattern: text inputs with the right type */}
-            <div className="grid gap-8 md:grid-cols-3 md:gap-6">
+            <div className="grid gap-2 md:grid-cols-3 md:gap-6">
               <div className="flex flex-col gap-4">
                 <label htmlFor="name" className={labelClass}>
                   Your name
@@ -248,7 +248,7 @@ export function QuoteSection() {
             </div>
 
             {/* Pattern: textarea (long free text) */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
               <label htmlFor="message" className={labelClass}>
                 Tell us about your event
               </label>

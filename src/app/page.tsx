@@ -5,6 +5,7 @@ import { MenuSection } from "@/components/menu-section";
 import { OccasionsStrip } from "@/components/occasions-strip";
 import { QuoteSection } from "@/components/quote-section";
 import { ReviewsSection } from "@/components/reviews-section";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         <ReviewsSection />
         <QuoteSection />
       </main>
+      <SiteFooter />
     </>
   );
 }

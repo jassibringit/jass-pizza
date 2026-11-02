@@ -35,7 +35,7 @@ export function SiteHeader() {
         </nav>
 
         <Link
-          href="/book"
+          href="#quote"
           className="hidden min-h-11 items-center rounded-full border border-gold md:inline-flex px-5 py-3 text-[15px] text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
           Request a quote →
