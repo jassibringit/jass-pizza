@@ -1,10 +1,10 @@
 "use server";
 
 import { z } from "zod";
-import { format, parseISO } from "date-fns";
-import { Resend } from "resend";
 import { QuoteSchema, type QuoteErrors } from "@/lib/booking-schema";
-import BookingNotification from "@/emails/booking-notification"
+import { saveInquiry } from "@/db/inquiries";
+import { sendBookingEmail } from "@/emails/send-booking-email";
+
 // What the action sends back to the form.
 export type BookState = {
   errors?: QuoteErrors;
@@ -12,59 +12,35 @@ export type BookState = {
   message?: string;
 };
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
+// The recipe: bots → check → save → notify → reply.
 export async function bookAction(
   prev: BookState,
   formData: FormData,
 ): Promise<BookState> {
   const data = Object.fromEntries(formData);
-  console.log({data})
 
-  // The real check: runs on the server, so it can't be skipped.
-  const result = QuoteSchema.safeParse(data);
- // honeypot pretend it worked
-  if(data.company){
-    return {success:true}
+  // 1. Honeypot: only bots fill the hidden field. Pretend it worked.
+  if (data.company) {
+    return { success: true };
   }
+
+  // 2. The real check: runs on the server, so it can't be skipped.
+  const result = QuoteSchema.safeParse(data);
   if (!result.success) {
     return { errors: z.flattenError(result.error).fieldErrors };
   }
+  const booking = result.data; // checked and cleaned (guests is a number, text is trimmed)
 
+  // 3. Save first, so the inquiry is never lost.
+  // If it fails, keep going: the email below still tells you about the lead.
+  try {
+    await saveInquiry(booking);
+  } catch (err) {
+    console.error("Saving inquiry failed:", err);
+  }
 
-  // The checked, cleaned answers (guests is a number, text is trimmed).
-  const booking = result.data;
-  const eventDate = format(parseISO(booking.date), "EEEE, MMMM d, yyyy");
-
-  // Plain text: simple, and safe to put visitor input in.
-  // Optional fields fall back to "—" so every line is always there.
-  const text = `New quote request
-
-EVENT
-Celebrating: ${booking.eventType}
-Date: ${eventDate}
-Guests: ${booking.guests}
-City: ${booking.city}
-
-CONTACT
-Name: ${booking.name}
-Email: ${booking.email}
-Phone: ${booking.phone || "—"}
-
-MESSAGE
-${booking.message || "—"}
-
-Hit reply to answer ${booking.name} directly.`;
-
-  const { error } = await resend.emails.send({
-    from: "Jass Pizza <onboarding@resend.dev>",
-    to: process.env.BOOKING_EMAIL!,
-    replyTo: booking.email,
-    subject: `New inquiry: ${booking.eventType}, ${eventDate}, ${booking.guests} guests`,
-    react : BookingNotification(booking),
-    text,
-  });
-
+  // 4. Notify the owner.
+  const { error } = await sendBookingEmail(booking);
   if (error) {
     // Full details in the terminal for you, a friendly message for the visitor.
     console.error("Resend failed:", error);
@@ -74,5 +50,6 @@ Hit reply to answer ${booking.name} directly.`;
     };
   }
 
+  // 5. Tell the form it worked.
   return { success: true };
 }
