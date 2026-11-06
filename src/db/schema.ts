@@ -1,3 +1,4 @@
+import { inquiryStatuses } from "@/lib/inquiry-schema";
 import { date, integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 // One row per quote request from the booking form.
@@ -5,7 +6,7 @@ export const inquiries = pgTable("inquiries", {
   // Filled in by the database
   id: serial("id").primaryKey(),       // 1, 2, 3… filled in automatically
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // when it arrived
-  status: text("status").notNull().default("new"), // new → quoted → booked (changed later in /admin)
+  status: text("status",{ enum: inquiryStatuses }).notNull().default("new"), // new → quoted → booked (changed later in /admin)
 
   // From the form: required in Zod, so required here
   name: text("name").notNull(),        // required text

@@ -1,5 +1,17 @@
 import { format, parseISO } from "date-fns";
 import type { Inquiry } from "@/db/schema";
+import { updateStatusAction } from "@/actions/inquiries";
+import { inquiryStatuses, type InquiryStatus } from "@/lib/inquiry-schema";
+import { DeleteInquiryButton } from "./delete-inquiry-button";
+
+// One look per status. Record<InquiryStatus, …> means TypeScript complains
+// if a status is ever added to the list without a style here.
+const statusClass: Record<InquiryStatus, string> = {
+  new: "border-gold bg-gold text-primary-foreground", // needs a reply: loudest
+  quoted: "border-gold/50 text-gold", // waiting on them
+  booked: "border-success/50 text-success", // deposit in
+  lost: "border-border text-muted-foreground", // done, fades back
+};
 
 const linkClass =
   "inline-flex min-h-11 items-center break-all text-foreground underline-offset-4 transition-colors hover:text-gold-bright hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
@@ -30,7 +42,9 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
             {inquiry.name}
           </h2>
         </div>
-        <span className="shrink-0 rounded-full border border-gold/50 px-3 py-1 text-xs tracking-wider text-gold uppercase">
+        <span
+          className={`shrink-0 rounded-full border px-3 py-1 text-xs tracking-wider uppercase ${statusClass[inquiry.status]}`}
+        >
           {inquiry.status}
         </span>
       </header>
@@ -76,6 +90,31 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
       <p className="text-xs text-muted-foreground">
         Received {receivedFormat.format(inquiry.createdAt)} · #{inquiry.id}
       </p>
+      <form action={updateStatusAction} className="flex items-center gap-2">
+        <input type="hidden" name="id" value={inquiry.id} />
+
+        <label htmlFor={`status-${inquiry.id}`} className="sr-only">
+          Status for {inquiry.name}
+        </label>
+        <select
+          id={`status-${inquiry.id}`}
+          name="status"
+          defaultValue={inquiry.status}
+          className="min-h-11 flex-1 rounded-full border border-border bg-background px-4 text-foreground scheme-dark focus-visible:outline-2 focus-visible:outline-ring"
+        >
+          {inquiryStatuses.map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
+
+        <button className="min-h-11 rounded-full border border-gold px-5 text-gold transition-colors hover:bg-gold hover:text-primary-foreground focus-visible:outline-2 focus-visible:outline-ring">
+          Save
+        </button>
+      </form>
+
+      <DeleteInquiryButton id={inquiry.id} name={inquiry.name} />
     </article>
   );
 }

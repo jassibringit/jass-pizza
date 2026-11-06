@@ -7,7 +7,7 @@ const menu: MenuItem[] = [
   {
     title: "Classic Margherita",
     description: "Tomato sauce, fresh mozzarella, basil, olive oil.",
-    image: "/menu/margherita.png",
+    image: "/menu/classic-margherita.png",
   },
   {
     title: "Cheese Pizza",
@@ -16,6 +16,7 @@ const menu: MenuItem[] = [
   {
     title: "Roasted Garlic Bianca",
     description: "Roasted garlic white sauce, mushrooms, mozzarella.",
+    image: "/menu/roasted-garlic-bianca.png"
   },
   {
     title: "Paneer Tikka Delight",
@@ -75,7 +76,7 @@ export function MenuSection() {
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 25vw, 50vw"
-                    className="object-cover"
+                    className="object-contain transition-transform duration-500 ease-in-out hover:scale-110"
                   />
                 ) : (
                   <span

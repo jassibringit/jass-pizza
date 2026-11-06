@@ -43,6 +43,7 @@
   --color-popover: var(--ink-2);
   --color-popover-foreground: var(--ivory);
   --color-destructive: #E5484D;
+  --color-success: #5FB37E; /* booked inquiries */
   --color-border: rgb(201 162 74 / 0.25);
   --color-input: rgb(201 162 74 / 0.4);
   --color-ring: var(--gold);
