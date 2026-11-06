@@ -16,7 +16,7 @@ export async function updateStatusAction(formData: FormData) {
   await updateInquiryStatus(result.data.id, result.data.status);
 
   // The data changed: re-render the page so the card shows the new status.
-  revalidatePath("/inquires");
+  revalidatePath("/inquiries");
 }
 
 export async function deleteInquiryAction(formData: FormData) {
@@ -27,5 +27,5 @@ export async function deleteInquiryAction(formData: FormData) {
 
   await deleteInquiry(result.data.id);
 
-  revalidatePath("/inquires");
+  revalidatePath("/inquiries");
 }
