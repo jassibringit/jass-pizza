@@ -1,8 +1,36 @@
+import type { ComponentType } from "react";
 import { format, parseISO } from "date-fns";
+import { Globe, MessageCircle, Phone, Users } from "lucide-react";
 import type { Inquiry } from "@/db/schema";
 import { updateStatusAction } from "@/actions/inquiries";
-import { inquiryStatuses, type InquiryStatus } from "@/lib/inquiry-schema";
+import {
+  inquiryStatuses,
+  type InquirySource,
+  type InquiryStatus,
+} from "@/lib/inquiry-schema";
+import { FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/brand-icons";
 import { DeleteInquiryButton } from "./delete-inquiry-button";
+
+// A label and logo per source, so you can see at a glance where a lead came from.
+// Record<InquirySource, …>: adding a source without a logo here is a type error.
+const sourceInfo: Record<
+  InquirySource,
+  { label: string; Icon: ComponentType<{ className?: string }> }
+> = {
+  website: { label: "Website", Icon: Globe },
+  instagram: { label: "Instagram", Icon: InstagramIcon },
+  tiktok: { label: "TikTok", Icon: TikTokIcon },
+  facebook: { label: "Facebook", Icon: FacebookIcon },
+  phone: { label: "Phone", Icon: Phone },
+  referral: { label: "Referral", Icon: Users },
+  other: { label: "Other", Icon: MessageCircle },
+};
+
+// Where a handle can be opened, so it becomes a tap-to-open link.
+const profileUrl: Partial<Record<InquirySource, string>> = {
+  instagram: "https://www.instagram.com/",
+  tiktok: "https://www.tiktok.com/@",
+};
 
 // One look per status. Record<InquiryStatus, …> means TypeScript complains
 // if a status is ever added to the list without a style here.
@@ -30,14 +58,29 @@ type InquiryCardProps = {
 // One inquiry: the event up top, how to reach them below.
 export function InquiryCard({ inquiry }: InquiryCardProps) {
   const eventDate = format(parseISO(inquiry.eventDate), "EEE, MMM d, yyyy");
+  // Capital S: JSX only treats capitalised names as components.
+  const { label: sourceLabel, Icon: SourceIcon } = sourceInfo[inquiry.source];
+  // Stored with or without "@"; strip it so we can add our own.
+  const handle = inquiry.handle?.replace(/^@/, "");
+  const handleUrl = profileUrl[inquiry.source];
 
   return (
     <article className="flex h-full flex-col gap-5 border border-border bg-card p-6">
       <header className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
-            {inquiry.eventType}
-          </p>
+          {/* Event type and source side by side; wraps under on narrow cards */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
+              {inquiry.eventType}
+            </p>
+            <p className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <SourceIcon className="size-4" />
+              <span>
+                <span className="sr-only">Came in via </span>
+                {sourceLabel}
+              </span>
+            </p>
+          </div>
           <h2 className="mt-2 font-display text-2xl leading-tight">
             {inquiry.name}
           </h2>
@@ -71,18 +114,37 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
         </p>
       )}
 
-      {/* Contact: tap to email or call */}
+      {/* Contact: tap to email, call or open their profile */}
       <ul className="mt-auto flex flex-col">
-        <li>
-          <a href={`mailto:${inquiry.email}`} className={linkClass}>
-            {inquiry.email}
-          </a>
-        </li>
+        {inquiry.email && (
+          <li>
+            <a href={`mailto:${inquiry.email}`} className={linkClass}>
+              {inquiry.email}
+            </a>
+          </li>
+        )}
         {inquiry.phone && (
           <li>
             <a href={`tel:${inquiry.phone}`} className={linkClass}>
               {inquiry.phone}
             </a>
+          </li>
+        )}
+        {handle && (
+          <li>
+            {handleUrl ? (
+              <a
+                href={`${handleUrl}${encodeURIComponent(handle)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${linkClass} gap-2`}
+              >
+                <SourceIcon className="size-4" />@{handle}
+                <span className="sr-only"> on {sourceLabel} (opens in a new tab)</span>
+              </a>
+            ) : (
+              <span className="inline-flex min-h-11 items-center">@{handle}</span>
+            )}
           </li>
         )}
       </ul>

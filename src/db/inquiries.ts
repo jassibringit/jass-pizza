@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { inquiries } from "@/db/schema";
 import type { QuoteData } from "@/lib/booking-schema";
-import type { InquiryStatus } from "@/lib/inquiry-schema";
+import type { InquiryStatus, ManualInquiryData } from "@/lib/inquiry-schema";
 
 // Everything that reads or writes the inquiries table lives here,
 // in CRUD order: create, read, update, delete.
@@ -18,6 +18,22 @@ export async function saveInquiry(booking: QuoteData) {
     email: booking.email,
     phone: booking.phone || null, // empty "" becomes null
     message: booking.message || null,
+  });
+}
+
+// A lead you add by hand (DM, call…). Empty optional fields become null.
+export async function saveManualInquiry(data: ManualInquiryData) {
+  await db.insert(inquiries).values({
+    source: data.source,
+    name: data.name,
+    eventType: data.eventType,
+    eventDate: data.date,
+    guests: data.guests,
+    city: data.city,
+    email: data.email || null,
+    phone: data.phone || null,
+    handle: data.handle || null,
+    message: data.message || null,
   });
 }
 

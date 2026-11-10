@@ -15,6 +15,20 @@
       "when": 1793847202567,
       "tag": "0001_silly_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793926336351,
+      "tag": "0002_kind_ben_parker",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794349153103,
+      "tag": "0003_glorious_malice",
+      "breakpoints": true
     }
   ]
 }

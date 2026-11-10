@@ -4,6 +4,7 @@ import { InquiryCard } from "./inquiry-card";
 // Reads the database, so the page wraps it in <Suspense>.
 export async function InquiryList() {
   const inquiries = await getInquiries();
+  console.log({inquiries})
 
   if (inquiries.length === 0) {
     return (
