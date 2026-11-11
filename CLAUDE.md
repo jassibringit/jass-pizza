@@ -8,7 +8,7 @@ Website and owner dashboard for Jass Pizza, a live pizza catering business servi
 
 ## Stack
 
-Next.js (App Router, `src/`), React 19, TypeScript (strict), Tailwind CSS v4, shadcn/ui, Neon Postgres + Drizzle ORM, Stack Auth, Zod, Resend + React Email, Vercel AI SDK, Vercel Blob. Tests with Vitest and Playwright. Deployed on Vercel with GitHub Actions CI.
+Next.js (App Router, `src/`), React 19, TypeScript (strict), Tailwind CSS v4, shadcn/ui, Neon Postgres + Drizzle ORM, Better Auth, Zod, Resend + React Email, Vercel AI SDK, Vercel Blob. Tests with Vitest and Playwright. Deployed on Vercel with GitHub Actions CI.
 
 ## Conventions
 

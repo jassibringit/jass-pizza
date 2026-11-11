@@ -16,6 +16,8 @@ export const auth = betterAuth({
   // Log in with email + password. Better Auth hashes passwords; we never see them.
   emailAndPassword: {
     enabled: true,
+    // Only the owner's account exists. Nobody new can join, even by calling the API directly.
+    disableSignUp: true,
   },
 
   // Lets Server Actions set the login cookie. Must stay the LAST plugin.

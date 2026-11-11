@@ -207,7 +207,7 @@ export function ManualInquiryForm() {
             {isPending ? "Saving…" : "Save inquiry →"}
           </button>
           <Link
-            href="/inquiries"
+            href="/admin/inquiries"
             className="inline-flex min-h-11 items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
             Cancel

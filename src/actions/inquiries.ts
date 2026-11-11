@@ -4,6 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { deleteInquiry, saveManualInquiry, updateInquiryStatus } from "@/db/inquiries";
+import { requireOwner } from "@/lib/require-owner";
 import {
   DeleteInquirySchema,
   ManualInquirySchema,
@@ -12,7 +13,7 @@ import {
 } from "@/lib/inquiry-schema";
 
 // Dashboard actions. Each one: validate → do → refresh.
-// Server Actions are public URLs, so each must check auth itself (not just the page).
+// Server Actions are public endpoints, so each one checks the session itself.
 
 // What createInquiryAction sends back to the form when it can't save.
 export type CreateInquiryState = {
@@ -24,7 +25,7 @@ export async function createInquiryAction(
   prev: CreateInquiryState,
   formData: FormData,
 ): Promise<CreateInquiryState> {
-  // TODO (auth): check the visitor is logged in as the owner first.
+  await requireOwner();
 
   const result = ManualInquirySchema.safeParse(Object.fromEntries(formData));
   if (!result.success) {
@@ -38,13 +39,13 @@ export async function createInquiryAction(
     return { message: "Couldn't save it. Check your connection and try again." };
   }
 
-  revalidatePath("/inquiries");
+  revalidatePath("/admin/inquiries");
   // Back to the list. redirect() works by throwing, so keep it last and outside try/catch.
-  redirect("/inquiries");
+  redirect("/admin/inquiries");
 }
 
 export async function updateStatusAction(formData: FormData) {
-  // TODO (auth): check the visitor is logged in as the owner first.
+  await requireOwner();
 
   const result = UpdateStatusSchema.safeParse(Object.fromEntries(formData));
   if (!result.success) return;
@@ -52,16 +53,16 @@ export async function updateStatusAction(formData: FormData) {
   await updateInquiryStatus(result.data.id, result.data.status);
 
   // The data changed: re-render the page so the card shows the new status.
-  revalidatePath("/inquiries");
+  revalidatePath("/admin/inquiries");
 }
 
 export async function deleteInquiryAction(formData: FormData) {
-  // TODO (auth): check the visitor is logged in as the owner first.
+  await requireOwner();
 
   const result = DeleteInquirySchema.safeParse(Object.fromEntries(formData));
   if (!result.success) return;
 
   await deleteInquiry(result.data.id);
 
-  revalidatePath("/inquiries");
+  revalidatePath("/admin/inquiries");
 }

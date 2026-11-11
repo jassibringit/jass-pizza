@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { inquiries } from "@/db/schema";
 import type { QuoteData } from "@/lib/booking-schema";
 import type { InquiryStatus, ManualInquiryData } from "@/lib/inquiry-schema";
+import { requireOwner } from "@/lib/require-owner";
 
 // Everything that reads or writes the inquiries table lives here,
 // in CRUD order: create, read, update, delete.
@@ -39,6 +40,7 @@ export async function saveManualInquiry(data: ManualInquiryData) {
 
 // All inquiries, newest first.
 export async function getInquiries() {
+    await requireOwner();
   return db.select().from(inquiries).orderBy(desc(inquiries.createdAt));
 }
 
