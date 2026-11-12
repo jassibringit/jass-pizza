@@ -1,6 +1,8 @@
 "use client";
 import { EventDatePicker } from "@/components/event-date-picker";
 import { Arrow } from "@/components/arrow";
+import { InstagramIcon, WhatsAppIcon } from "@/components/brand-icons";
+import { contact } from "@/lib/contact";
 import { startTransition, useActionState, useState } from "react";
 
 import { eventTypes, type QuoteErrors } from "@/lib/booking-schema";
@@ -11,6 +13,8 @@ const labelClass = "font-display text-2xl";
 const fieldBase =
   "w-full border border-border bg-background px-5 text-base text-foreground scheme-dark transition-colors placeholder:text-muted-foreground hover:border-gold focus-visible:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-invalid:border-destructive";
 const errorClass = "px-5 text-sm text-destructive";
+const chatClass =
+  "inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-5 py-2 text-[15px] text-foreground transition-colors hover:border-gold hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
 const inputClass = `${fieldBase} min-h-11 rounded-full`;
 const textareaClass = `${fieldBase} rounded-3xl py-3`;
 const pillClass =
@@ -52,6 +56,35 @@ export function QuoteSection() {
           Two minutes now, a personal quote back to you, usually within 24
           hours.
         </p>
+
+        {/* Some people would rather message than fill in a form */}
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+          <p className="text-sm text-muted-foreground">
+            Prefer to chat for a quicker reply? Send your date, guest count and city.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href={contact.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={chatClass}
+            >
+              <WhatsAppIcon className="size-4" />
+              WhatsApp us
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a
+              href={contact.instagramDm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={chatClass}
+            >
+              <InstagramIcon className="size-4" />
+              DM on Instagram
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        </div>
 
         {state.success ? (
           <p

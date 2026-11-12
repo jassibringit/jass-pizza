@@ -1,16 +1,11 @@
 import Link from "next/link";
-import { InstagramIcon, TikTokIcon } from "@/components/brand-icons";
-
-// TODO: replace these with your real details before going live.
-const contact = {
-  phone: "(647) 767-0244", // shown on the page
-  phoneLink: "+16477670244", // used for tap-to-call: +1 then the 10 digits, no spaces
-  email: "hello@jasspizza.ca",
-};
+import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/brand-icons";
+import { contact } from "@/lib/contact";
 
 const socials = [
-  { label: "Instagram", href: "https://www.instagram.com/jass.pizza", icon: <InstagramIcon /> },
-  { label: "TikTok", href: "https://www.tiktok.com/@jass.pizza", icon: <TikTokIcon /> },
+  { label: "WhatsApp", href: contact.whatsapp, icon: <WhatsAppIcon /> },
+  { label: "Instagram", href: contact.instagram, icon: <InstagramIcon /> },
+  { label: "TikTok", href: contact.tiktok, icon: <TikTokIcon /> },
 ];
 
 const linkClass =

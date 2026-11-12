@@ -46,3 +46,21 @@ export function FacebookIcon({ className = "size-5" }: IconProps) {
     </svg>
   );
 }
+
+// Simple chat-bubble mark for WhatsApp links (the label says "WhatsApp").
+export function WhatsAppIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+    </svg>
+  );
+}
