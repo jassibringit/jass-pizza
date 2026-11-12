@@ -1,5 +1,6 @@
 "use client";
 import { EventDatePicker } from "@/components/event-date-picker";
+import { Arrow } from "@/components/arrow";
 import { startTransition, useActionState, useState } from "react";
 
 import { eventTypes, type QuoteErrors } from "@/lib/booking-schema";
@@ -40,7 +41,7 @@ export function QuoteSection() {
 
   return (
     <section id="quote" className="border-t border-border bg-card">
-      <div className="mx-auto max-w-7xl px-6 py-16 md:py-32">
+      <div className="reveal mx-auto max-w-7xl px-6 py-16 md:py-32">
         <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
           Check your date
         </p>
@@ -285,9 +286,9 @@ export function QuoteSection() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="inline-flex min-h-11 items-center rounded-full bg-primary px-7 py-4 font-bold text-primary-foreground transition-colors hover:bg-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring disabled:cursor-wait disabled:opacity-60"
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-7 py-4 font-bold text-primary-foreground transition-colors hover:bg-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring disabled:cursor-wait disabled:opacity-60"
               >
-                {isPending ? "Sending…" : "Send my inquiry →"}
+                {isPending ? "Sending…" : <>Send my inquiry <Arrow /></>}
               </button>
               <p className="text-sm text-muted-foreground">
                 No payment now. We&apos;ll confirm availability first.

@@ -68,15 +68,15 @@ export function MenuSection() {
 
         <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-16 md:gap-x-7 md:gap-y-14 lg:grid-cols-4">
           {menu.map((item) => (
-            <li key={item.title} className="flex flex-col gap-3 md:gap-4">
-              <div className="relative aspect-4/4 overflow-hidden border border-border bg-secondary">
+            <li key={item.title} className="reveal group flex flex-col gap-3 md:gap-4">
+              <div className="relative aspect-4/4 overflow-hidden border border-border bg-secondary transition-colors duration-500 group-hover:border-gold/50">
                 {item.image ? (
                   <Image
                     src={item.image}
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 25vw, 50vw"
-                    className="object-contain transition-transform duration-500 ease-in-out hover:scale-110"
+                    className="object-contain transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
                   />
                 ) : (
                   <span

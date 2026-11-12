@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Arrow } from "@/components/arrow";
 import { MobileMenu } from "./mobile-menu";
 
 const navLinks = [
   { href: "#menu", label: "Menu" },
   { href: "#how", label: "How it works" },
-  { href: "/packages", label: "Packages" },
+  { href: "#packages", label: "Packages" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -27,7 +28,7 @@ export function SiteHeader() {
                   href={link.href}
                   className="inline-flex min-h-11 items-center text-[15px] text-foreground transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                 >
-                  {link.label}
+                  <span className="link-underline">{link.label}</span>
                 </Link>
               </li>
             ))}
@@ -36,9 +37,9 @@ export function SiteHeader() {
 
         <Link
           href="#quote"
-          className="hidden min-h-11 items-center rounded-full border border-gold md:inline-flex px-5 py-3 text-[15px] text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          className="group hidden min-h-11 items-center gap-2 rounded-full border border-gold md:inline-flex px-5 py-3 text-[15px] text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
-          Request a quote →
+          Request a quote <Arrow />
         </Link>
 
         <MobileMenu links={navLinks} />

@@ -52,8 +52,8 @@ export function ReviewsSection() {
 
         <ul className="mt-8 columns-1 gap-4 md:mt-10 md:columns-2 lg:columns-3">
           {reviews.map((review) => (
-            <li key={review.name} className="mb-2 break-inside-avoid">
-              <figure className="flex flex-col gap-1 border border-border bg-card p-6 md:gap-4">
+            <li key={review.name} className="reveal mb-2 break-inside-avoid">
+              <figure className="flex flex-col gap-1 border border-border bg-card p-6 transition-colors duration-300 hover:border-gold/50 md:gap-4">
                 <p className="text-gold">
                   <span className="sr-only">{review.rating} out of 5 stars</span>
                   <span aria-hidden="true" className="tracking-[0.2em]">

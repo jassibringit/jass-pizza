@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Arrow } from "@/components/arrow";
 
 const steps = [
   {
@@ -28,7 +29,7 @@ export function HowItWorks() {
 
         <ol className="mt-10 grid gap-10 md:mt-14 md:grid-cols-3 md:gap-8">
           {steps.map((step, i) => (
-            <li key={step.title} className="flex flex-col gap-3">
+            <li key={step.title} className="reveal flex flex-col gap-3">
               <span className="font-display text-xl text-gold italic">
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -43,10 +44,10 @@ export function HowItWorks() {
         </ol>
 
         <Link
-          href="/packages"
-          className="mt-12 inline-flex min-h-11 items-center rounded-full border border-gold px-6 py-3 text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring md:mt-14"
+          href="#packages"
+          className="group mt-12 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold px-6 py-3 text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring md:mt-14"
         >
-          See packages →
+          See packages <Arrow />
         </Link>
       </div>
     </section>

@@ -3,6 +3,7 @@ import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { MenuSection } from "@/components/menu-section";
 import { OccasionsStrip } from "@/components/occasions-strip";
+import { PackagesSection } from "@/components/packages-section";
 import { QuoteSection } from "@/components/quote-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { SiteFooter } from "@/components/site-footer";
@@ -18,6 +19,7 @@ export default function Home() {
         {/* <CraftSection /> */}
         <MenuSection />
         <HowItWorks />
+        <PackagesSection />
         <ReviewsSection />
         <QuoteSection />
       </main>

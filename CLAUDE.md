@@ -32,9 +32,14 @@ Reference mockups are in `docs/mockups/` (`Main`, `Packages`, `Book`, `Assistant
 
 Content, validation and AI prompts must follow these rules.
 
-- No prices on the public site or from the AI assistant. Quotes are given personally.
-- Packages: **Intimate** (20–25 pizzas, up to 25 guests, 3 flavours), **Celebration** (30–35 pizzas, up to 60 guests, 4 flavours, most booked), **Grand** (40–55 pizzas, up to 100 guests, 4 flavours).
-- Maximum 4 flavours per event, chosen from the menu below. The source of truth for the site is `src/components/menu-section.tsx`; keep the two in sync.
+- The public site shows only a starting price and a typical range ("Events start at …", "Most events range from … to …"). Final quotes are given personally (date, guests, travel, add-ons). The AI assistant may repeat those figures but never gives a final quote.
+- Packages (source of truth for the site: `src/components/packages-section.tsx`; keep the two in sync):
+  - **Intimate**: 3 flavours, 1.5 hours of live pizza, cannoli on request. For close friends and family; great for birthdays and backyard parties.
+  - **Celebration** (most booked): 4 flavours, 2 hours of live pizza, cannoli on request. Great for showers, engagements and office parties.
+  - **Grand**: 4 flavours (one created for the event), 3 hours of live pizza, fresh-filled cannoli for everyone. Great for weddings, corporate events and milestones.
+  - Every package includes: in-house dough and sauces, 12" pizzas made live in front of guests, setup and cleanup, plates, napkins and dips, no hidden fees.
+  - Price depends mainly on guest count; the starting price and typical range are env vars (`PRICE_FROM`, `PRICE_RANGE_LOW`, `PRICE_RANGE_HIGH`), never hard-coded.
+- Maximum 4 flavours per event, chosen from the menu below (Grand's custom flavour is the only exception). The source of truth for the menu is `src/components/menu-section.tsx`; keep the two in sync.
 - Menu:
   - **Classic Margherita**: tomato sauce, fresh mozzarella, basil, olive oil.
   - **Cheese Pizza**: tomato sauce, a blend of mozzarella and parmesan.
@@ -43,9 +48,10 @@ Content, validation and AI prompts must follow these rules.
   - **Classic Pepperoni**: tomato sauce, mozzarella, pepperoni.
   - **Tandoori Chicken Twist**: tomato sauce, tandoori chicken, onions, cilantro, mozzarella.
   - **Garden Veggie Classic**: tomato sauce, bell peppers, onions, mushrooms, mozzarella.
-- Add-on: **Fresh-Filled Cannoli**: house-made ricotta filling, piped fresh at the event, finished with pistachio or chocolate chips.
+- Add-on: **Fresh-Filled Cannoli**: house-made ricotta filling, piped fresh at the event, finished with pistachio or chocolate chips. On request with Intimate and Celebration; included with Grand.
 - Pizzas are made in two Gozney ovens. Never describe them as wood-fired.
 - The ovens run outdoors only. Every event needs an outdoor spot for them (patio, driveway, backyard), even if guests are indoors.
 - Dough and sauces are made in-house. Cannoli filling is house-made; the shells are not.
 - A 30% deposit holds the date.
-- Service area: Brampton, Peel and the GTA, with a travel fee outside Peel. No winter events.
+- Service area: Brampton, Peel and the GTA, with a travel fee outside Peel Region.
+- Season: events run April to November only (no December–March). The rule lives in `isClosedMonth` and `seasonNote` in `src/lib/booking-schema.ts`.

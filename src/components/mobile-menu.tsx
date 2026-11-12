@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Arrow } from "@/components/arrow";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -55,9 +56,9 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
           <Link
             href="#quote"
             onClick={close}
-            className="mt-6 flex min-h-11 items-center justify-center rounded-full border border-gold px-5 py-3 text-[15px] text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+            className="group mt-6 flex min-h-11 items-center justify-center gap-2 rounded-full border border-gold px-5 py-3 text-[15px] text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
-            Request a quote →
+            Request a quote <Arrow />
           </Link>
         </nav>
       )}
