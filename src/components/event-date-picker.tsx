@@ -4,6 +4,7 @@ import { useState } from "react";
 import { format, startOfToday } from "date-fns";
 import { ChevronDownIcon } from "lucide-react";
 
+import { isClosedMonth, seasonNote } from "@/lib/booking-schema";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -31,7 +32,7 @@ export function EventDatePicker({ error, onPick }: { error?: string, onPick? : (
               variant="outline"
               data-empty={!date}
               aria-invalid={!!error}
-              aria-describedby="event-date-error"
+              aria-describedby="event-date-hint event-date-error"
               className="min-h-11 w-full justify-between rounded-full border-border bg-transparent px-5 text-base font-normal text-foreground hover:border-gold hover:bg-transparent aria-invalid:border-destructive data-[empty=true]:text-muted-foreground"
             >
               {date ? format(date, "PPP") : "Pick a date"}
@@ -49,10 +50,14 @@ export function EventDatePicker({ error, onPick }: { error?: string, onPick? : (
               onPick?.()
             }}
             defaultMonth={date}
-            disabled={(day) => day < startOfToday()}
+            disabled={(day) => day < startOfToday() || isClosedMonth(day)}
           />
         </PopoverContent>
       </Popover>
+
+      <p id="event-date-hint" className="px-5 text-xs text-muted-foreground">
+        {seasonNote}
+      </p>
 
       {error && (
         <p id="event-date-error" className="px-5 text-sm text-destructive">

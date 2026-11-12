@@ -4,10 +4,9 @@ export function Hero() {
   return (
     <section
       aria-label="Intro"
-      className="relative flex min-h-[560px] items-end bg-secondary md:min-h-[760px]"
+      className="relative flex min-h-svh items-end overflow-hidden bg-secondary"
     >
-      {/* Hero photo goes here once we have it, e.g.
-          <Image src="/hero.jpg" alt="Pizza leaving the oven at a party" fill priority className="object-cover" /> */}
+      <HeroVideo />
       <div aria-hidden="true" className="absolute inset-0 bg-background/55" />
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-16 md:gap-7 md:pb-22">
@@ -35,5 +34,24 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Decorative background. Portrait clip, so the crop is anchored on the ovens for wide screens.
+// muted + playsInline are required for autoplay (playsInline stops iOS going full screen).
+function HeroVideo() {
+  return (
+    <video
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      poster="/hero-poster.jpg"
+      aria-hidden="true"
+      className="absolute inset-0 size-full object-cover object-[center_38%] motion-reduce:hidden"
+    >
+      <source src="/hero.mp4" type="video/mp4" />
+    </video>
   );
 }

@@ -3,8 +3,8 @@ import { InstagramIcon, TikTokIcon } from "@/components/brand-icons";
 
 // TODO: replace these with your real details before going live.
 const contact = {
-  phone: "(647) 000-0000", // shown on the page
-  phoneLink: "+16470000000", // used for tap-to-call: +1 then the 10 digits, no spaces
+  phone: "(647) 767-0244", // shown on the page
+  phoneLink: "+16477670244", // used for tap-to-call: +1 then the 10 digits, no spaces
   email: "hello@jasspizza.ca",
 };
 

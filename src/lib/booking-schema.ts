@@ -10,17 +10,22 @@ export const eventTypes = [
   "Other",
 ] as const;
 
+// Ovens run outdoors, so no events in these months. getMonth(): 0 = Jan … 11 = Dec.
+const closedMonths = new Set([11, 0, 1, 2]); // Dec–Mar
+export const seasonNote = "We book events from April to November.";
 
-
-
+export function isClosedMonth(date: Date) {
+  return closedMonths.has(date.getMonth());
+}
 
 export const QuoteSchema = z.object({
   eventType: z.enum(eventTypes, "Pick what you're celebrating"),
-  // Must be a real date (YYYY-MM-DD) and not in the past.
+  // Must be a real date (YYYY-MM-DD), not in the past, and in season.
   // Anything else would crash format() in book.ts.
   date: z.iso
     .date("Pick a date")
-    .refine((d) => !isBefore(parseISO(d), startOfToday()), "Pick a future date"),
+    .refine((d) => !isBefore(parseISO(d), startOfToday()), "Pick a future date")
+    .refine((d) => !isClosedMonth(parseISO(d)), seasonNote),
   guests: z.coerce
     .number("Enter a number")
     .int("Use a whole number")
