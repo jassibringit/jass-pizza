@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { QuoteSchema } from "./booking-schema";
+import { QuoteSchema, serviceStyles } from "./booking-schema";
 // Where a lead is in the pipeline. The single source of truth:
 // the database column, the validation and the <select> all use this list.
 
@@ -24,6 +24,11 @@ export type InquirySource = (typeof inquirySources)[number];
 
 export const ManualInquirySchema = QuoteSchema.extend({
   source: z.enum(manualSources, "Pick where they reached you"),
+  // DMs often don't say yet, so these are optional when you log a lead yourself.
+  serviceStyle: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.enum(serviceStyles).optional(),
+  ),
   guests: z.coerce.number("Enter a number").int("Use a whole number").min(1, "At least 1 guest"),
   email: z.email("Enter a valid email").max(254, "That email is too long").or(z.literal("")),
   handle: z.string().trim().max(50, "That handle is too long"),

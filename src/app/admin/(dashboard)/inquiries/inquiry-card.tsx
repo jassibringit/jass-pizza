@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
-import { format, parseISO } from "date-fns";
 import { Globe, MessageCircle, Phone, Users } from "lucide-react";
 import type { Inquiry } from "@/db/schema";
+import { formatEventDate, serviceStyleLabels } from "@/lib/booking-schema";
 import { updateStatusAction } from "@/actions/inquiries";
 import {
   inquiryStatuses,
@@ -57,7 +57,7 @@ type InquiryCardProps = {
 
 // One inquiry: the event up top, how to reach them below.
 export function InquiryCard({ inquiry }: InquiryCardProps) {
-  const eventDate = format(parseISO(inquiry.eventDate), "EEE, MMM d, yyyy");
+  const eventDate = formatEventDate(inquiry.eventDate, "EEE, MMM d, yyyy");
   // Capital S: JSX only treats capitalised names as components.
   const { label: sourceLabel, Icon: SourceIcon } = sourceInfo[inquiry.source];
   // Stored with or without "@"; strip it so we can add our own.
@@ -100,7 +100,14 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
         </div>
         <div>
           <dt className="text-xs text-muted-foreground">Guests</dt>
-          <dd className="mt-1">{inquiry.guests}</dd>
+          <dd className="mt-1">
+            {inquiry.guests}
+            {inquiry.serviceStyle && (
+              <span className="block text-xs text-muted-foreground">
+                {serviceStyleLabels[inquiry.serviceStyle]}
+              </span>
+            )}
+          </dd>
         </div>
         <div>
           <dt className="text-xs text-muted-foreground">City</dt>

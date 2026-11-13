@@ -1,6 +1,5 @@
 import { Resend } from "resend";
-import { format, parseISO } from "date-fns";
-import type { QuoteData } from "@/lib/booking-schema";
+import { formatEventDate, serviceStyleLabels, type QuoteData } from "@/lib/booking-schema";
 import BookingNotification from "@/emails/booking-notification";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -8,7 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Emails the owner about a new inquiry.
 // Returns Resend's { data, error } so the caller decides what the visitor sees.
 export async function sendBookingEmail(booking: QuoteData) {
-  const eventDate = format(parseISO(booking.date), "EEEE, MMMM d, yyyy");
+  const eventDate = formatEventDate(booking.date);
 
   // Plain text: simple, and safe to put visitor input in.
   // Optional fields fall back to "—" so every line is always there.
@@ -16,6 +15,7 @@ export async function sendBookingEmail(booking: QuoteData) {
 
 EVENT
 Celebrating: ${booking.eventType}
+Service: ${serviceStyleLabels[booking.serviceStyle]}
 Date: ${eventDate}
 Guests: ${booking.guests}
 City: ${booking.city}
@@ -34,7 +34,7 @@ Hit reply to answer ${booking.name} directly.`;
     from: "Jass Pizza <onboarding@resend.dev>",
     to: process.env.BOOKING_EMAIL!,
     replyTo: booking.email,
-    subject: `New inquiry: ${booking.eventType}, ${eventDate}, ${booking.guests} guests`,
+    subject: `New inquiry: ${booking.eventType}, ${booking.date ? eventDate : "date TBD"}, ${booking.guests} guests`,
     react: BookingNotification(booking),
     text,
   });

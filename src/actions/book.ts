@@ -5,34 +5,33 @@ import { QuoteSchema, type QuoteErrors } from "@/lib/booking-schema";
 import { saveInquiry } from "@/db/inquiries";
 import { sendBookingEmail } from "@/emails/send-booking-email";
 
-// What the action sends back to the form.
+// What the action sends back to the wizard.
 export type BookState = {
   errors?: QuoteErrors;
   success?: boolean;
   message?: string;
 };
 
-// The recipe: bots → check → save → notify → reply.
+// The wizard keeps every answer in state and sends them all at once on the last step,
+// so this takes a plain object rather than FormData. `company` is the honeypot.
+// Anyone can call a Server Action with anything, so the input is typed loosely and Zod decides.
 export async function bookAction(
   prev: BookState,
-  formData: FormData,
+  input: Record<string, unknown>,
 ): Promise<BookState> {
-  const data = Object.fromEntries(formData);
-
   // 1. Honeypot: only bots fill the hidden field. Pretend it worked.
-  if (data.company) {
+  if (input.company) {
     return { success: true };
   }
 
-  // 2. The real check: runs on the server, so it can't be skipped.
-  const result = QuoteSchema.safeParse(data);
+  // 2. The real check: the browser validated each step, but anyone can call this directly.
+  const result = QuoteSchema.safeParse(input);
   if (!result.success) {
     return { errors: z.flattenError(result.error).fieldErrors };
   }
-  const booking = result.data; // checked and cleaned (guests is a number, text is trimmed)
+  const booking = result.data;
 
-  // 3. Save first, so the inquiry is never lost.
-  // If it fails, keep going: the email below still tells you about the lead.
+  // 3. Save first, so the inquiry is never lost. If it fails, the email still tells you.
   try {
     await saveInquiry(booking);
   } catch (err) {
@@ -42,14 +41,11 @@ export async function bookAction(
   // 4. Notify the owner.
   const { error } = await sendBookingEmail(booking);
   if (error) {
-    // Full details in the terminal for you, a friendly message for the visitor.
     console.error("Resend failed:", error);
     return {
-      message:
-        "Something went wrong sending your inquiry. Please try again in a minute.",
+      message: "Something went wrong sending your inquiry. Please try again in a minute.",
     };
   }
 
-  // 5. Tell the form it worked.
   return { success: true };
 }

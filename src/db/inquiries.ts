@@ -13,12 +13,13 @@ export async function saveInquiry(booking: QuoteData) {
   await db.insert(inquiries).values({
     name: booking.name,
     eventType: booking.eventType,
-    eventDate: booking.date, // form calls it "date", the table calls it "eventDate"
+    eventDate: booking.date ?? null, // form calls it "date", the table calls it "eventDate"
     guests: booking.guests,
+    serviceStyle: booking.serviceStyle,
     city: booking.city,
     email: booking.email,
-    phone: booking.phone || null, // empty "" becomes null
-    message: booking.message || null,
+    phone: booking.phone ?? null, // not given → null
+    message: booking.message ?? null,
   });
 }
 
@@ -28,8 +29,9 @@ export async function saveManualInquiry(data: ManualInquiryData) {
     source: data.source,
     name: data.name,
     eventType: data.eventType,
-    eventDate: data.date,
+    eventDate: data.date ?? null,
     guests: data.guests,
+    serviceStyle: data.serviceStyle ?? null,
     city: data.city,
     email: data.email || null,
     phone: data.phone || null,

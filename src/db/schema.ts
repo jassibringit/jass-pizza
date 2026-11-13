@@ -1,3 +1,4 @@
+import { serviceStyles } from "@/lib/booking-schema";
 import { inquirySources, inquiryStatuses } from "@/lib/inquiry-schema";
 import { date, integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
@@ -14,8 +15,9 @@ export const inquiries = pgTable("inquiries", {
   // Required for every lead (Zod checks them before saving)
   name: text("name").notNull(),
   eventType: text("event_type").notNull(), // "Birthday", "Corporate"…
-  eventDate: date("event_date").notNull(), // "2027-06-14"
+  eventDate: date("event_date"), // "2027-06-14"; optional, people may not have a date yet
   guests: integer("guests").notNull(), // whole number
+  serviceStyle: text("service_style", { enum: serviceStyles }), // main | appetizer (older rows: empty)
   city: text("city").notNull(),
 
   // Optional: a DM might give only one way to reach them, so no .notNull() (empty = null).

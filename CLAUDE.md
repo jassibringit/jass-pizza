@@ -50,8 +50,10 @@ Content, validation and AI prompts must follow these rules.
   - **Garden Veggie Classic**: tomato sauce, bell peppers, onions, mushrooms, mozzarella.
 - Add-on: **Fresh-Filled Cannoli**: house-made ricotta filling, piped fresh at the event, finished with pistachio or chocolate chips. On request with Intimate and Celebration; included with Grand.
 - Pizzas are made in two Gozney ovens. Never describe them as wood-fired.
-- The ovens run outdoors only. Every event needs an outdoor spot for them (patio, driveway, backyard), even if guests are indoors.
+- The ovens run outdoors only. Every event needs an outdoor spot of about 10 × 10 ft for ventilation (patio, driveway, backyard), even if guests are indoors.
 - Dough and sauces are made in-house. Cannoli filling is house-made; the shells are not.
 - A 30% deposit holds the date.
+- Inquiries (the step-by-step form in the homepage `#quote` section, `src/components/quote-wizard/`; rules in `src/lib/booking-schema.ts`): event types are Wedding / Mehndi, Birthday, Anniversary, Corporate, Religious / Community, Something else. Minimum 10 guests. The date is optional, but when given it must be at least 15 days away and in season.
+- Service style: "main" (pizza is the meal, plan for every guest) or "appetizer" (late-night / appetizer, plan for about 60% of the guest count). Stored per inquiry.
 - Service area: Brampton, Peel and the GTA, with a travel fee outside Peel Region.
 - Season: events run April to November only (no December–March). The rule lives in `isClosedMonth` and `seasonNote` in `src/lib/booking-schema.ts`.

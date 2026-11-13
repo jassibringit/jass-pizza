@@ -1,4 +1,3 @@
-import { format, parseISO } from "date-fns";
 import {
   Body,
   Button,
@@ -13,7 +12,7 @@ import {
   Section,
   Text,
 } from "react-email";
-import type { QuoteData } from "@/lib/booking-schema";
+import { formatEventDate, serviceStyleLabels, type QuoteData } from "@/lib/booking-schema";
 
 // Email apps ignore stylesheets and can't read globals.css or load our fonts,
 // so the brand colours are repeated here and every style is inline.
@@ -30,13 +29,12 @@ const serif = "Georgia, 'Times New Roman', serif"; // stands in for Playfair
 const sans = "Helvetica, Arial, sans-serif"; // stands in for DM Sans
 
 export default function BookingNotification(booking: QuoteData) {
-    const eventDate = format(parseISO(booking.date), "EEEE, MMMM d, yyyy");
-//   const eventDate = format(parseISO("2026-10-31"), "EEEE, MMMM d, yyyy");
-    const firstName = booking.name.split(" ")[0];
-//   const firstName = "jassi";
+  const eventDate = formatEventDate(booking.date);
+  const firstName = booking.name.split(" ")[0];
 
   const eventRows = [
     { label: "Celebrating", value: booking.eventType },
+    { label: "Service", value: serviceStyleLabels[booking.serviceStyle] },
     { label: "Date", value: eventDate },
     { label: "Guests", value: String(booking.guests) },
     { label: "City", value: booking.city },
