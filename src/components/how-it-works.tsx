@@ -44,10 +44,10 @@ export function HowItWorks() {
         </ol>
 
         <Link
-          href="#packages"
+          href="#quote"
           className="group mt-12 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold px-6 py-3 text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring md:mt-14"
         >
-          See packages <Arrow />
+          Get your estimate <Arrow />
         </Link>
       </div>
     </section>

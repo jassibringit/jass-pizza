@@ -105,7 +105,7 @@ export function EventTypeStep({
         <p className="mt-4 text-ivory-muted">Pick the closest fit. It helps us suggest the right setup.</p>
       </Item>
       <Item dir={dir}>
-        <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <ul className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-2 sm:mt-6">
           {eventTypes.map((type) => {
             const selected = data.eventType === type;
             return (

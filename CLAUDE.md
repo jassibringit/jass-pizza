@@ -33,14 +33,10 @@ Reference mockups are in `docs/mockups/` (`Main`, `Packages`, `Book`, `Assistant
 Content, validation and AI prompts must follow these rules.
 
 - The public site shows a starting price, a typical range, and a per-inquiry estimate in the quote wizard (step 5). Final quotes are given personally (date, guests, travel, add-ons). The AI assistant may repeat those figures but never gives a final quote.
-- Pricing rules live in one pure, tested module: `src/lib/pricing.ts` (`estimate()`), used by the wizard to show the estimate and by the Server Action to recalculate and save it. Never duplicate the maths elsewhere; change it there and run `npm test`. The owner's rate card and DM calculator at `/admin/pricing` read the same module. Pizza counts, dough balls and helpers are internal and never shown to clients. Estimate = one rate per guest (with a minimum price) to that plus $200 or 20%, whichever is more; the low end is the base price for a simple event, and travel, date and add-ons move it up. Estimates whose low end is under $1,000 include 3 flavours; the rest include 4.
-- Packages (source of truth for the site: `src/components/packages-section.tsx`; keep the two in sync):
-  - **Intimate**: 3 flavours, 1.5 hours of live pizza, cannoli on request. For close friends and family; great for birthdays and backyard parties.
-  - **Celebration** (most booked): 4 flavours, 2 hours of live pizza, cannoli on request. Great for showers, engagements and office parties.
-  - **Grand**: 4 flavours (one created for the event), 3 hours of live pizza, fresh-filled cannoli for everyone. Great for weddings, corporate events and milestones.
-  - Every package includes: in-house dough and sauces, 12" pizzas made live in front of guests, setup and cleanup, plates, napkins and dips, no hidden fees.
-  - Price depends mainly on guest count and service style. Every price number (rates, minimum, range, the packages section's "events start at" and typical range) lives in `PRICING` in `src/lib/pricing.ts`; nowhere else.
-- Maximum 4 flavours per event, chosen from the menu below (Grand's custom flavour is the only exception). The source of truth for the menu is `src/components/menu-section.tsx`; keep the two in sync.
+- Pricing rules live in one pure, tested module: `src/lib/pricing.ts` (`estimate()`), used by the wizard to show the estimate and by the Server Action to recalculate and save it. Never duplicate the maths elsewhere; change it there and run `npm test`. The owner's rate card and DM calculator at `/admin/pricing` read the same module. Pizza counts, dough balls and helpers are internal and never shown to clients. Estimate = one rate per guest (with a minimum price) to that plus $200 or 20%, whichever is more; the low end is the base price for a simple event, and travel, date and add-ons move it up. Small events (low estimate under $1,000, `PRICING.smallEventUnder`) include 3 flavours and, for main meals, 2 hours of service; the rest include 4 flavours and 2.5 hours (3.5 over 60 pizzas).
+- No package tiers: price depends on guest count and service style, calculated by `src/lib/pricing.ts`. Every price number (rates, minimum, range, the quote section's "events start at" and typical range) lives in `PRICING` there; nowhere else.
+- Every event includes: in-house dough and sauces, 12" pizzas made live in front of guests, setup and cleanup, plates, napkins and dips, no hidden fees (listed in `src/components/quote-section.tsx`).
+- Maximum 4 flavours per event, chosen from the menu below. The source of truth for the menu is `src/components/menu-section.tsx`; keep the two in sync.
 - Menu:
   - **Classic Margherita**: tomato sauce, fresh mozzarella, basil, olive oil.
   - **Cheese Pizza**: tomato sauce, a blend of mozzarella and parmesan.
@@ -49,7 +45,7 @@ Content, validation and AI prompts must follow these rules.
   - **Classic Pepperoni**: tomato sauce, mozzarella, pepperoni.
   - **Tandoori Chicken Twist**: tomato sauce, tandoori chicken, onions, cilantro, mozzarella.
   - **Garden Veggie Classic**: tomato sauce, bell peppers, onions, mushrooms, mozzarella.
-- Add-on: **Fresh-Filled Cannoli**: house-made ricotta filling, piped fresh at the event, finished with pistachio or chocolate chips. On request with Intimate and Celebration; included with Grand.
+- Add-on: **Fresh-Filled Cannoli**: house-made ricotta filling, piped fresh at the event, finished with pistachio or chocolate chips. Available on request.
 - Pizzas are made in two Gozney ovens. Never describe them as wood-fired.
 - The ovens run outdoors only. Every event needs an outdoor spot of about 10 × 10 ft for ventilation (patio, driveway, backyard), even if guests are indoors.
 - Dough and sauces are made in-house. Cannoli filling is house-made; the shells are not.

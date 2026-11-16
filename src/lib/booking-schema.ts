@@ -7,7 +7,7 @@ export const eventTypes = [
   "Birthday",
   "Anniversary",
   "Corporate",
-  "Religious / Community",
+  // "Religious / Community",
   "Something else",
 ] as const;
 

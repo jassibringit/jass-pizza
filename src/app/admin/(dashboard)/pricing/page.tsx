@@ -25,7 +25,7 @@ export default function PricingPage() {
     },
     {
       label: "Flavours",
-      value: `${PRICING.flavours.small} under ${formatMoney(PRICING.flavours.smallEventUnder)}, otherwise ${PRICING.flavours.standard}`,
+      value: `${PRICING.flavours.small} under ${formatMoney(PRICING.smallEventUnder)}, otherwise ${PRICING.flavours.standard}`,
     },
     {
       label: "Pizzas",
@@ -37,7 +37,7 @@ export default function PricingPage() {
     },
     {
       label: "Serving time",
-      value: `Main ${PRICING.servingHours.main.normal} h (${PRICING.servingHours.main.long} h over ${PRICING.servingHours.main.longOverPizzas} pizzas) · Other food ${PRICING.servingHours.snack.normal} h (${PRICING.servingHours.snack.long} h over ${PRICING.servingHours.snack.longOverPizzas} pizzas)`,
+      value: `Main ${PRICING.servingHours.main.small} h under ${formatMoney(PRICING.smallEventUnder)}, ${PRICING.servingHours.main.normal} h above (${PRICING.servingHours.main.long} h over ${PRICING.servingHours.main.longOverPizzas} pizzas) · Other food ${PRICING.servingHours.snack.normal} h (${PRICING.servingHours.snack.long} h over ${PRICING.servingHours.snack.longOverPizzas} pizzas)`,
     },
     { label: "Deposit", value: `${PRICING.deposit * 100}% holds the date` },
     { label: "HST", value: PRICING.showHst ? "Shown as + HST" : "Not charged yet" },

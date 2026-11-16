@@ -95,6 +95,9 @@ describe("estimate: internal numbers", () => {
 
 describe("estimate: serving time", () => {
   it.each([
+    [30, "main", 2], // $850: small event
+    [47, "main", 2], // $987: still under $1,000
+    [48, "main", 2.5], // $1,008
     [60, "main", 2.5], // 47 pizzas
     [80, "main", 3.5], // 62 pizzas
     [60, "snack", 1.5], // 30 pizzas

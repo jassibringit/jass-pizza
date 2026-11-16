@@ -5,7 +5,7 @@ export const PRICING = {
   // Per guest. "snack" = there's other food at the event too.
   ratePerGuest: { main: 21, snack: 16 },
   minimum: 850,
-  // "Most events range from … to …" on the packages section: from the minimum up to
+  // "Most range from … to …" in the quote section: from the minimum up to
   // this event's estimate, rounded to a tidy $100.
   typicalLargeEvent: { guests: 100, service: "main" },
   guestsPerPizza: { main: 1.3, snack: 2 }, // snack portions are smaller
@@ -15,13 +15,14 @@ export const PRICING = {
   maxPizzas: 80, // more than this is a custom quote
   showHst: false, // turn on once HST-registered
   helpers: { secondHelperOverPizzas: 40 },
+  // A "small event" has a low estimate under this. It gets fewer flavours and shorter service.
+  smallEventUnder: 1000,
   servingHours: {
-    main: { normal: 2.5, long: 3.5, longOverPizzas: 60 },
-    snack: { normal: 1.5, long: 2.5, longOverPizzas: 40 },
+    main: { small: 2, normal: 2.5, long: 3.5, longOverPizzas: 60 },
+    snack: { small: 1.5, normal: 1.5, long: 2.5, longOverPizzas: 40 },
   },
   deposit: 0.3, // 30% holds the date
-  // 3 flavours when the low estimate is under $1,000, otherwise 4.
-  flavours: { small: 3, standard: 4, smallEventUnder: 1000 },
+  flavours: { small: 3, standard: 4 },
 } as const;
 
 export type Service = keyof typeof PRICING.ratePerGuest;
@@ -48,7 +49,7 @@ export function basePrice(guests: number, service: Service) {
   return guests * PRICING.ratePerGuest[service];
 }
 
-// The "Most events range from … to …" figures on the packages section.
+// The "Most range from … to …" figures in the quote section.
 export function typicalPriceRange() {
   const { guests, service } = PRICING.typicalLargeEvent;
   const largest = estimate({ guests, service }).high ?? PRICING.minimum;
@@ -71,9 +72,6 @@ export function estimate({ guests, service }: { guests: number; service: Service
 
   const helpers = pizzas > PRICING.helpers.secondHelperOverPizzas ? 2 : 1;
 
-  const serving = PRICING.servingHours[service];
-  const servingHours = pizzas > serving.longOverPizzas ? serving.long : serving.normal;
-
   const isCustom = pizzas > PRICING.maxPizzas;
   const low = isCustom ? null : Math.max(basePrice(guests, service), PRICING.minimum);
   const high =
@@ -82,10 +80,12 @@ export function estimate({ guests, service }: { guests: number; service: Service
       : low +
         Math.max(PRICING.rangeSpread.minDollars, Math.round(low * PRICING.rangeSpread.percent));
 
-  const flavours =
-    low !== null && low < PRICING.flavours.smallEventUnder
-      ? PRICING.flavours.small
-      : PRICING.flavours.standard;
+  const isSmallEvent = low !== null && low < PRICING.smallEventUnder;
+  const flavours = isSmallEvent ? PRICING.flavours.small : PRICING.flavours.standard;
+
+  const serving = PRICING.servingHours[service];
+  const servingHours =
+    pizzas > serving.longOverPizzas ? serving.long : isSmallEvent ? serving.small : serving.normal;
 
   return {
     low,
