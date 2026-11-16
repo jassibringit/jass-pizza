@@ -17,7 +17,14 @@ export const inquiries = pgTable("inquiries", {
   eventType: text("event_type").notNull(), // "Birthday", "Corporate"…
   eventDate: date("event_date"), // "2027-06-14"; optional, people may not have a date yet
   guests: integer("guests").notNull(), // whole number
-  serviceStyle: text("service_style", { enum: serviceStyles }), // main | appetizer (older rows: empty)
+  serviceStyle: text("service_style", { enum: serviceStyles }), // main | snack (older rows: empty)
+
+  // Calculated on the server by src/lib/pricing.ts. Owner-only; never shown to clients.
+  estimateLow: integer("estimate_low"), // dollars; empty for custom quotes
+  estimateHigh: integer("estimate_high"),
+  pizzas: integer("pizzas"),
+  doughBalls: integer("dough_balls"),
+  helpers: integer("helpers"),
   city: text("city").notNull(),
 
   // Optional: a DM might give only one way to reach them, so no .notNull() (empty = null).

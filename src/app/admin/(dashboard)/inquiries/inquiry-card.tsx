@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { Globe, MessageCircle, Phone, Users } from "lucide-react";
 import type { Inquiry } from "@/db/schema";
 import { formatEventDate, serviceStyleLabels } from "@/lib/booking-schema";
+import { describeEstimate } from "@/lib/pricing";
 import { updateStatusAction } from "@/actions/inquiries";
 import {
   inquiryStatuses,
@@ -114,6 +115,26 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
           <dd className="mt-1">{inquiry.city}</dd>
         </div>
       </dl>
+
+      {/* Calculated on the server when the inquiry came in. Owner only. */}
+      {inquiry.pizzas !== null && (
+        <div className="flex flex-col gap-1 border-b border-border pb-4 text-sm">
+          <p>
+            <span className="text-muted-foreground">Estimate </span>
+            <span className="font-display text-lg text-gold">
+              {describeEstimate({
+                low: inquiry.estimateLow,
+                high: inquiry.estimateHigh,
+                isCustom: inquiry.estimateLow === null,
+              })}
+            </span>
+          </p>
+          <p className="text-muted-foreground">
+            {inquiry.pizzas} pizzas · {inquiry.doughBalls} dough balls · {inquiry.helpers}{" "}
+            {inquiry.helpers === 1 ? "helper" : "helpers"}
+          </p>
+        </div>
+      )}
 
       {inquiry.message && (
         <p className="leading-relaxed whitespace-pre-line text-ivory-muted">

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "email": "email dev --dir src/emails"
+    "email": "email dev --dir src/emails",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -32,7 +34,7 @@
   "devDependencies": {
     "@react-email/ui": "^6.11.5",
     "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
+    "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^18.0.9",
@@ -41,6 +43,7 @@
     "eslint-config-next": "16.4.2",
     "react-email": "^6.11.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^5.1.0"
   }
 }

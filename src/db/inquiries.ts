@@ -2,15 +2,28 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { inquiries } from "@/db/schema";
 import type { QuoteData } from "@/lib/booking-schema";
+import { estimate, type Estimate } from "@/lib/pricing";
 import type { InquiryStatus, ManualInquiryData } from "@/lib/inquiry-schema";
 import { requireOwner } from "@/lib/require-owner";
 
 // Everything that reads or writes the inquiries table lives here,
 // in CRUD order: create, read, update, delete.
 
+// The pricing columns, from an estimate calculated on the server.
+function estimateColumns(est: Estimate) {
+  return {
+    estimateLow: est.low,
+    estimateHigh: est.high,
+    pizzas: est.pizzas,
+    doughBalls: est.doughBalls,
+    helpers: est.helpers,
+  };
+}
+
 // Turns the checked form answers into a database row.
-export async function saveInquiry(booking: QuoteData) {
+export async function saveInquiry(booking: QuoteData, est: Estimate) {
   await db.insert(inquiries).values({
+    ...estimateColumns(est),
     name: booking.name,
     eventType: booking.eventType,
     eventDate: booking.date ?? null, // form calls it "date", the table calls it "eventDate"
@@ -32,6 +45,10 @@ export async function saveManualInquiry(data: ManualInquiryData) {
     eventDate: data.date ?? null,
     guests: data.guests,
     serviceStyle: data.serviceStyle ?? null,
+    // Only estimable once you know the service style.
+    ...(data.serviceStyle
+      ? estimateColumns(estimate({ guests: data.guests, service: data.serviceStyle }))
+      : {}),
     city: data.city,
     email: data.email || null,
     phone: data.phone || null,

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { addDays, format, isBefore, parseISO, startOfToday } from "date-fns";
+import type { Service } from "@/lib/pricing";
 
 export const eventTypes = [
   "Wedding / Mehndi",
@@ -10,12 +11,13 @@ export const eventTypes = [
   "Something else",
 ] as const;
 
-// "main": pizza is the meal, plan for every guest. "appetizer": plan for ~60% of guests.
-export const serviceStyles = ["main", "appetizer"] as const;
+// "main": pizza is the main food. "snack": there's other food too (late-night / appetizer).
+// Must match the services priced in src/lib/pricing.ts.
+export const serviceStyles = ["main", "snack"] as const satisfies readonly Service[];
 export type ServiceStyle = (typeof serviceStyles)[number];
 export const serviceStyleLabels: Record<ServiceStyle, string> = {
-  main: "Main meal",
-  appetizer: "Late-night / appetizer",
+  main: "Pizza is the main food",
+  snack: "Other food too",
 };
 
 // Ovens run outdoors, so no events in these months. getMonth(): 0 = Jan … 11 = Dec.

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { QuoteSchema, type QuoteErrors } from "@/lib/booking-schema";
 import { saveInquiry } from "@/db/inquiries";
 import { sendBookingEmail } from "@/emails/send-booking-email";
+import { estimate } from "@/lib/pricing";
 
 // What the action sends back to the wizard.
 export type BookState = {
@@ -31,15 +32,19 @@ export async function bookAction(
   }
   const booking = result.data;
 
+  // Recalculate the estimate here with the same pricing module the browser used.
+  // Never trust prices sent by the client: anyone can edit the request.
+  const est = estimate({ guests: booking.guests, service: booking.serviceStyle });
+
   // 3. Save first, so the inquiry is never lost. If it fails, the email still tells you.
   try {
-    await saveInquiry(booking);
+    await saveInquiry(booking, est);
   } catch (err) {
     console.error("Saving inquiry failed:", err);
   }
 
   // 4. Notify the owner.
-  const { error } = await sendBookingEmail(booking);
+  const { error } = await sendBookingEmail(booking, est);
   if (error) {
     console.error("Resend failed:", error);
     return {

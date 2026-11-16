@@ -13,6 +13,7 @@ import {
   Text,
 } from "react-email";
 import { formatEventDate, serviceStyleLabels, type QuoteData } from "@/lib/booking-schema";
+import { describeEstimate, type Estimate } from "@/lib/pricing";
 
 // Email apps ignore stylesheets and can't read globals.css or load our fonts,
 // so the brand colours are repeated here and every style is inline.
@@ -28,7 +29,7 @@ const colors = {
 const serif = "Georgia, 'Times New Roman', serif"; // stands in for Playfair
 const sans = "Helvetica, Arial, sans-serif"; // stands in for DM Sans
 
-export default function BookingNotification(booking: QuoteData) {
+export default function BookingNotification(booking: QuoteData, est: Estimate) {
   const eventDate = formatEventDate(booking.date);
   const firstName = booking.name.split(" ")[0];
 
@@ -38,6 +39,10 @@ export default function BookingNotification(booking: QuoteData) {
     { label: "Date", value: eventDate },
     { label: "Guests", value: String(booking.guests) },
     { label: "City", value: booking.city },
+    { label: "Estimate", value: describeEstimate(est) },
+    { label: "Pizzas", value: `${est.pizzas} (${est.doughBalls} dough balls)` },
+    { label: "Helpers", value: String(est.helpers) },
+    { label: "Serving time", value: `${est.servingHours} hours` },
   ];
   const contactRows = [
     { label: "Name", value: booking.name },

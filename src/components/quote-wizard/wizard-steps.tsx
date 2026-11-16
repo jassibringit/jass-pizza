@@ -8,6 +8,8 @@ import {
   serviceStyles,
   type ServiceStyle,
 } from "@/lib/booking-schema";
+import { snackPortionShare } from "@/lib/pricing";
+import { EstimatePanel } from "./estimate-panel";
 import type { WizardData } from "./wizard-state";
 
 // ── Shared styles ───────────────────────────────────────────────────────────
@@ -127,9 +129,9 @@ export function EventTypeStep({
 
 // ── Step 2: service style ───────────────────────────────────────────────────
 
-const serviceCopy: Record<ServiceStyle, { title: string; body: string }> = {
-  main: { title: "Main meal", body: "Pizza is the main food. We plan for every guest." },
-  appetizer: { title: "Late-night / appetizer", body: "Plan for ~60% of guest count." },
+const serviceCopy: Record<ServiceStyle, string> = {
+  main: "No, pizza is the main food",
+  snack: "Yes, there's other food too",
 };
 
 export function ServiceStyleStep({
@@ -142,7 +144,7 @@ export function ServiceStyleStep({
     <>
       <Item dir={dir}>
         <StepHeading focus={focusHeading}>
-          Is pizza the <Accent>main meal</Accent>?
+          Will there be <Accent>other food</Accent> at your event?
         </StepHeading>
         <p className="mt-4 text-ivory-muted">This helps us plan the right number of pizzas for your crowd.</p>
       </Item>
@@ -156,12 +158,9 @@ export function ServiceStyleStep({
                   type="button"
                   aria-pressed={selected}
                   onClick={() => onChoose(style)}
-                  className={`${cardBase} flex h-full min-h-28 flex-col justify-center gap-1 px-5 py-5 ${selected ? cardOn : cardOff}`}
+                  className={`${cardBase} flex h-full min-h-24 items-center px-5 py-5 font-display text-2xl ${selected ? cardOn : cardOff}`}
                 >
-                  <span className="font-display text-2xl">{serviceCopy[style].title}</span>
-                  <span className={`text-sm ${selected ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
-                    {serviceCopy[style].body}
-                  </span>
+                  {serviceCopy[style]}
                 </button>
               </li>
             );
@@ -175,6 +174,13 @@ export function ServiceStyleStep({
 // ── Step 3: guest count ─────────────────────────────────────────────────────
 
 export function GuestsStep({ dir, focusHeading, data, errors, onChange, onBlur }: StepProps) {
+  // Only for "there's other food too": explains the smaller portions (and lower price).
+  const guests = Number(data.guests);
+  const showSnackNote = data.serviceStyle === "snack" && guests > 0;
+  const describedBy = [showSnackNote && "guests-note", errors.guests && "guests-error"]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <>
       <Item dir={dir}>
@@ -184,7 +190,7 @@ export function GuestsStep({ dir, focusHeading, data, errors, onChange, onBlur }
         <p className="mt-4 text-ivory-muted">Expected headcount.</p>
       </Item>
       <Item dir={dir}>
-        <div className="mt-8 flex max-w-xs flex-col gap-2">
+        <div className="mt-8 flex flex-col gap-2">
           <label htmlFor="guests" className={labelClass}>
             Number of guests
           </label>
@@ -199,10 +205,16 @@ export function GuestsStep({ dir, focusHeading, data, errors, onChange, onBlur }
             onChange={(e) => onChange("guests", e.target.value)}
             onBlur={() => onBlur("guests")}
             aria-invalid={!!errors.guests}
-            aria-describedby={errors.guests ? "guests-error" : undefined}
-            className={inputClass}
+            aria-describedby={describedBy || undefined}
+            className={`${inputClass} max-w-xs`}
           />
           <FieldError id="guests-error" message={errors.guests} />
+          {showSnackNote && (
+            <p id="guests-note" className="max-w-md text-sm text-muted-foreground">
+              With other food served, we&apos;ll size pizza as an appetizer for your {guests}{" "}
+              guests: about {Math.round(snackPortionShare() * 100)}% of a full-meal portion each.
+            </p>
+          )}
         </div>
       </Item>
     </>
@@ -273,6 +285,10 @@ export function DatePlaceStep({ dir, focusHeading, data, errors, onChange, onBlu
 // ── Step 5: contact ─────────────────────────────────────────────────────────
 
 export function ContactStep({ dir, focusHeading, data, errors, onChange, onBlur }: StepProps) {
+  // Steps 2 and 3 are already valid by the time anyone reaches this step.
+  const guests = Number(data.guests);
+  const service = serviceStyles.find((s) => s === data.serviceStyle);
+
   return (
     <>
       <Item dir={dir}>
@@ -281,6 +297,13 @@ export function ContactStep({ dir, focusHeading, data, errors, onChange, onBlur 
         </StepHeading>
         <p className="mt-4 text-ivory-muted">We&apos;ll get back to you, usually within a day.</p>
       </Item>
+      {service && guests > 0 && (
+        <Item dir={dir}>
+          <div className="mt-8">
+            <EstimatePanel guests={guests} service={service} />
+          </div>
+        </Item>
+      )}
       <Item dir={dir}>
         <div className="mt-8 grid gap-6 sm:grid-cols-2">
           <div className="flex flex-col gap-2">

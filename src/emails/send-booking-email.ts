@@ -1,12 +1,13 @@
 import { Resend } from "resend";
 import { formatEventDate, serviceStyleLabels, type QuoteData } from "@/lib/booking-schema";
 import BookingNotification from "@/emails/booking-notification";
+import { describeEstimate, type Estimate } from "@/lib/pricing";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Emails the owner about a new inquiry.
 // Returns Resend's { data, error } so the caller decides what the visitor sees.
-export async function sendBookingEmail(booking: QuoteData) {
+export async function sendBookingEmail(booking: QuoteData, est: Estimate) {
   const eventDate = formatEventDate(booking.date);
 
   // Plain text: simple, and safe to put visitor input in.
@@ -19,6 +20,12 @@ Service: ${serviceStyleLabels[booking.serviceStyle]}
 Date: ${eventDate}
 Guests: ${booking.guests}
 City: ${booking.city}
+
+ESTIMATE (owner only)
+Estimate: ${describeEstimate(est)}
+Pizzas: ${est.pizzas} (${est.doughBalls} dough balls)
+Helpers: ${est.helpers}
+Serving time: ${est.servingHours} hours
 
 CONTACT
 Name: ${booking.name}
@@ -35,7 +42,7 @@ Hit reply to answer ${booking.name} directly.`;
     to: process.env.BOOKING_EMAIL!,
     replyTo: booking.email,
     subject: `New inquiry: ${booking.eventType}, ${booking.date ? eventDate : "date TBD"}, ${booking.guests} guests`,
-    react: BookingNotification(booking),
+    react: BookingNotification(booking, est),
     text,
   });
 }

@@ -4,16 +4,12 @@ import { serviceStyleLabels, type ServiceStyle } from "@/lib/booking-schema";
 import { StepHeading } from "./wizard-steps";
 import type { WizardData } from "./wizard-state";
 
-const shortServiceLabel: Record<ServiceStyle, string> = {
-  main: serviceStyleLabels.main,
-  appetizer: "Appetizer",
-};
 
 export function Confirmation({ data }: { data: WizardData }) {
   const firstName = data.name.trim().split(/\s+/)[0];
   const summary = [
     data.eventType,
-    shortServiceLabel[data.serviceStyle as ServiceStyle],
+    serviceStyleLabels[data.serviceStyle as ServiceStyle],
     `${data.guests} guests`,
     data.date,
     data.city,

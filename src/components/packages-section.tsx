@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { Arrow } from "@/components/arrow";
 import { seasonNote } from "@/lib/booking-schema";
+import { PRICING, formatMoney, typicalPriceRange } from "@/lib/pricing";
 
 type Package = {
   name: string;
@@ -45,23 +46,12 @@ const included = [
   "No hidden fees",
 ];
 
-// Prices come from env vars (see .env.example) so they can change without a code change.
-// If one is missing, that line is simply left out.
-const money = new Intl.NumberFormat("en-CA", {
-  style: "currency",
-  currency: "CAD",
-  maximumFractionDigits: 0,
-});
-
-function priceFromEnv(value: string | undefined) {
-  const amount = Number(value);
-  return value && Number.isFinite(amount) && amount > 0 ? money.format(amount) : null;
-}
-
 export function PackagesSection() {
-  const startsAt = priceFromEnv(process.env.PRICE_FROM);
-  const rangeLow = priceFromEnv(process.env.PRICE_RANGE_LOW);
-  const rangeHigh = priceFromEnv(process.env.PRICE_RANGE_HIGH);
+  // From src/lib/pricing.ts, so these always match the quote wizard's estimates.
+  const startsAt = formatMoney(PRICING.minimum);
+  const range = typicalPriceRange();
+  const rangeLow = formatMoney(range.low);
+  const rangeHigh = formatMoney(range.high);
 
   return (
     <section id="packages" aria-labelledby="packages-heading" className="border-t border-border">
@@ -77,19 +67,15 @@ export function PackagesSection() {
           </h2>
         </div>
 
-        {startsAt && (
-          <div className="reveal mt-10 border-y border-border py-8 text-center md:mt-14">
-            <p className="font-display text-3xl font-semibold md:text-4xl">
-              events start at <span className="text-gold">{startsAt}</span>
-              <span className="text-gold">.</span>
-            </p>
-            {rangeLow && rangeHigh && (
-              <p className="mt-2 text-ivory-muted">
-                Most events range from {rangeLow} to {rangeHigh}, depending on guest count.
-              </p>
-            )}
-          </div>
-        )}
+        <div className="reveal mt-10 border-y border-border py-8 text-center md:mt-14">
+          <p className="font-display text-3xl font-semibold md:text-4xl">
+            events start at <span className="text-gold">{startsAt}</span>
+            <span className="text-gold">.</span>
+          </p>
+          <p className="mt-2 text-ivory-muted">
+            Most events range from {rangeLow} to {rangeHigh}, depending on guest count.
+          </p>
+        </div>
 
         <ul className="mt-14 grid gap-8 md:mt-16 md:grid-cols-3 md:gap-6">
           {packages.map((pkg) => (
