@@ -32,11 +32,10 @@ export function QuoteSection() {
           </h2>
           {/* Prices come from src/lib/pricing.ts, so they match the wizard's estimate */}
           <p className="mx-auto mt-5 max-w-xl text-ivory-muted">
-            Events start at <span className="text-gold">{formatMoney(PRICING.minimum)}</span>. Most
-            range from {formatMoney(range.low)} to {formatMoney(range.high)}, depending on guest
-            count. Your estimate appears before you send.
+            Events start at <span className="text-gold">{formatMoney(PRICING.minimum)}</span>. 
+            Your estimate appears before you send.
           </p>
-        </div>
+        </div> 
 
         {/* Edge to edge on phones (no double padding); a framed card from sm up */}
         <div className="-mx-6 mt-10 sm:mx-auto sm:max-w-3xl md:mt-14">

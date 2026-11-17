@@ -43,3 +43,6 @@ next-env.d.ts
 
 # Business-private notes (costs, margins). Never commit.
 /private/
+
+# Personal TypeScript practice. Never commit.
+/practice/

@@ -33,9 +33,14 @@ export function EstimatePanel({ guests, service }: { guests: number; service: Se
       <p className="text-[11px] tracking-[0.25em] text-muted-foreground uppercase">Your estimate</p>
 
       {est.isCustom || est.low === null || est.high === null ? (
-        <p className="mt-2 font-display text-2xl leading-snug md:text-3xl">
-          That&apos;s a big one! We&apos;ll build a custom quote for you.
-        </p>
+        <>
+          <p className="mt-2 font-display text-2xl leading-snug md:text-3xl">
+            That&apos;s a big one! Events this size get a custom quote.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-ivory-muted">
+            We&apos;ll reach out to plan the details with you: venue, timing and menu.
+          </p>
+        </>
       ) : (
         <>
           <p className="mt-2 font-display text-2xl leading-tight font-semibold md:text-3xl">

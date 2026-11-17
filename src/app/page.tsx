@@ -1,4 +1,5 @@
 import { CraftSection } from "@/components/craft-section";
+import { FaqSection } from "@/components/faq-section";
 import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { MenuSection } from "@/components/menu-section";
@@ -20,6 +21,7 @@ export default function Home() {
         <HowItWorks />
         <ReviewsSection />
         <QuoteSection />
+        <FaqSection />
       </main>
       <SiteFooter />
     </>

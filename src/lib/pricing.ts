@@ -2,35 +2,37 @@
 // share the same maths and can't disagree. Covered by pricing.test.ts.
 
 export const PRICING = {
-  // Per guest. "snack" = there's other food at the event too.
-  ratePerGuest: { main: 21, snack: 16 },
+  // The base price covers the first guests; each guest after that adds the extra rate.
+  // "snack" = there's other food at the event too (smaller portions).
   minimum: 850,
-  // "Most range from … to …" in the quote section: from the minimum up to
-  // this event's estimate, rounded to a tidy $100.
-  typicalLargeEvent: { guests: 100, service: "main" },
+  includedGuests: { main: 30, snack: 45 },
+  extraGuestRate: { main: 18, snack: 15 },
+  // The estimate shows price to price + this (room for travel, date, add-ons).
+  rangeSpread: 200,
+  // From this price up, events get a custom quote after a chat instead of a number.
+  customQuoteFrom: 2000,
   guestsPerPizza: { main: 1.3, snack: 2 }, // snack portions are smaller
   extraDoughBalls: 3,
-  // high = low + $200 or 20%, whichever is more (room for travel, date, add-ons).
-  rangeSpread: { minDollars: 200, percent: 0.2 },
-  maxPizzas: 80, // more than this is a custom quote
   showHst: false, // turn on once HST-registered
   helpers: { secondHelperOverPizzas: 40 },
-  // A "small event" has a low estimate under this. It gets fewer flavours and shorter service.
+  // A "small event" is priced under this. It gets fewer flavours and shorter service.
   smallEventUnder: 1000,
   servingHours: {
-    main: { small: 2, normal: 2.5, long: 3.5, longOverPizzas: 60 },
+    main: { small: 2, normal: 2.5, long: 3, longOverPizzas: 60 },
     snack: { small: 1.5, normal: 1.5, long: 2.5, longOverPizzas: 40 },
   },
+  extraHalfHour: 60, // each extra half hour of live serving
   deposit: 0.3, // 30% holds the date
   flavours: { small: 3, standard: 4 },
 } as const;
 
-export type Service = keyof typeof PRICING.ratePerGuest;
+export type Service = keyof typeof PRICING.extraGuestRate;
 
 export type Estimate = {
   low: number | null; // null for custom quotes
   high: number | null;
   // Internal only: never shown to clients.
+  formulaPrice: number; // the calculated price, even for custom quotes (owner's starting point)
   pizzas: number;
   doughBalls: number;
   helpers: 1 | 2;
@@ -44,21 +46,28 @@ export function pizzasFor(guests: number, service: Service) {
   return Math.ceil(guests / PRICING.guestsPerPizza[service]);
 }
 
-// Guest price before the minimum and range are applied.
+// The minimum covers the included guests; every guest after that adds the extra rate.
 export function basePrice(guests: number, service: Service) {
-  return guests * PRICING.ratePerGuest[service];
+  const extraGuests = Math.max(guests - PRICING.includedGuests[service], 0);
+  return PRICING.minimum + extraGuests * PRICING.extraGuestRate[service];
 }
 
 // The "Most range from … to …" figures in the quote section.
 export function typicalPriceRange() {
-  const { guests, service } = PRICING.typicalLargeEvent;
-  const largest = estimate({ guests, service }).high ?? PRICING.minimum;
-  return { low: PRICING.minimum, high: Math.round(largest / 100) * 100 };
+  return { low: PRICING.minimum, high: PRICING.customQuoteFrom };
 }
 
-// The largest guest count that still gets a range (more is a custom quote).
+// The largest guest count that still gets a price (more is a custom quote).
 export function maxGuestsBeforeCustom(service: Service) {
-  return Math.floor(PRICING.maxPizzas * PRICING.guestsPerPizza[service]);
+  const roomUnderCutOff = PRICING.customQuoteFrom - PRICING.minimum;
+  const extraGuests = Math.ceil(roomUnderCutOff / PRICING.extraGuestRate[service]) - 1;
+  return PRICING.includedGuests[service] + extraGuests;
+}
+
+// Shortest and longest live serving time across all events, for the FAQ.
+export function servingTimeRange() {
+  const hours = Object.values(PRICING.servingHours).flatMap((s) => [s.small, s.normal, s.long]);
+  return { min: Math.min(...hours), max: Math.max(...hours) };
 }
 
 // How big a snack portion is compared with a main-meal one (0.65 = 65%).
@@ -69,18 +78,14 @@ export function snackPortionShare() {
 export function estimate({ guests, service }: { guests: number; service: Service }): Estimate {
   const pizzas = pizzasFor(guests, service);
   const doughBalls = pizzas + PRICING.extraDoughBalls;
-
   const helpers = pizzas > PRICING.helpers.secondHelperOverPizzas ? 2 : 1;
 
-  const isCustom = pizzas > PRICING.maxPizzas;
-  const low = isCustom ? null : Math.max(basePrice(guests, service), PRICING.minimum);
-  const high =
-    low === null
-      ? null
-      : low +
-        Math.max(PRICING.rangeSpread.minDollars, Math.round(low * PRICING.rangeSpread.percent));
+  const formulaPrice = basePrice(guests, service);
+  const isCustom = formulaPrice >= PRICING.customQuoteFrom;
+  const low = isCustom ? null : formulaPrice;
+  const high = low === null ? null : low + PRICING.rangeSpread;
 
-  const isSmallEvent = low !== null && low < PRICING.smallEventUnder;
+  const isSmallEvent = !isCustom && formulaPrice < PRICING.smallEventUnder;
   const flavours = isSmallEvent ? PRICING.flavours.small : PRICING.flavours.standard;
 
   const serving = PRICING.servingHours[service];
@@ -90,6 +95,7 @@ export function estimate({ guests, service }: { guests: number; service: Service
   return {
     low,
     high,
+    formulaPrice,
     pizzas,
     doughBalls,
     helpers,
@@ -109,14 +115,19 @@ export function formatMoney(amount: number) {
   return money.format(amount);
 }
 
-// "$1,260 – $1,512", or a single price if both ends match.
+// "$1,210 – $1,410", or a single price if both ends match.
 export function formatRange(low: number, high: number) {
   return low === high ? formatMoney(low) : `${formatMoney(low)} – ${formatMoney(high)}`;
 }
 
-// For the owner's email and dashboard.
-export function describeEstimate(est: Pick<Estimate, "low" | "high" | "isCustom">) {
-  return est.isCustom || est.low === null || est.high === null
-    ? "Custom quote"
-    : formatRange(est.low, est.high);
+// For the owner's email and dashboard. Custom quotes show the formula price as a starting point.
+export function describeEstimate(
+  est: Pick<Estimate, "low" | "high" | "isCustom"> & { formulaPrice?: number },
+) {
+  if (est.isCustom || est.low === null || est.high === null) {
+    return est.formulaPrice
+      ? `Custom quote (formula ${formatMoney(est.formulaPrice)})`
+      : "Custom quote";
+  }
+  return formatRange(est.low, est.high);
 }

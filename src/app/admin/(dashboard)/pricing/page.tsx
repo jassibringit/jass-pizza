@@ -11,17 +11,14 @@ export const metadata: Metadata = {
 // Every number here comes from src/lib/pricing.ts, so this card always matches
 // what the website estimates.
 export default function PricingPage() {
-  const spread = PRICING.rangeSpread;
-
   const rules: { label: string; value: string }[] = [
-    { label: "Minimum price", value: formatMoney(PRICING.minimum) },
     {
       label: "Range shown to customers",
-      value: `Price + ${formatMoney(spread.minDollars)} or ${spread.percent * 100}%, whichever is more`,
+      value: `Price to price + ${formatMoney(PRICING.rangeSpread)}`,
     },
     {
       label: "Custom quote",
-      value: `Over ${PRICING.maxPizzas} pizzas (${maxGuestsBeforeCustom("main")}+ guests on main, ${maxGuestsBeforeCustom("snack")}+ with other food)`,
+      value: `From ${formatMoney(PRICING.customQuoteFrom)} (${maxGuestsBeforeCustom("main") + 1}+ guests on main, ${maxGuestsBeforeCustom("snack") + 1}+ with other food). Chat first, then quote.`,
     },
     {
       label: "Flavours",
@@ -57,7 +54,7 @@ export default function PricingPage() {
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         <section aria-labelledby="rates-heading" className="border border-border p-6 md:p-8">
           <h2 id="rates-heading" className="font-display text-2xl font-semibold">
-            per guest<span className="text-gold">.</span>
+            rates<span className="text-gold">.</span>
           </h2>
           <table className="mt-6 w-full text-left">
             <thead className="text-xs text-muted-foreground">
@@ -66,19 +63,24 @@ export default function PricingPage() {
                   Service
                 </th>
                 <th scope="col" className="pb-3 font-normal">
-                  Per guest
+                  {formatMoney(PRICING.minimum)} includes
+                </th>
+                <th scope="col" className="pb-3 font-normal">
+                  Each extra guest
                 </th>
               </tr>
             </thead>
             <tbody>
               {serviceStyles.map((style) => {
-                const rate = PRICING.ratePerGuest[style];
                 return (
                   <tr key={style} className="border-t border-border">
                     <th scope="row" className="py-3 pr-4 font-normal">
                       {serviceStyleLabels[style]}
                     </th>
-                    <td className="py-3 font-display text-xl text-gold">{formatMoney(rate)}</td>
+                    <td className="py-3 pr-4">{PRICING.includedGuests[style]} guests</td>
+                    <td className="py-3 font-display text-xl text-gold">
+                      {formatMoney(PRICING.extraGuestRate[style])}
+                    </td>
                   </tr>
                 );
               })}

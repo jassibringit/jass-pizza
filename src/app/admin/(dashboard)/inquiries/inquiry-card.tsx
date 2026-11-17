@@ -2,7 +2,7 @@ import type { ComponentType } from "react";
 import { Globe, MessageCircle, Phone, Users } from "lucide-react";
 import type { Inquiry } from "@/db/schema";
 import { formatEventDate, serviceStyleLabels } from "@/lib/booking-schema";
-import { describeEstimate } from "@/lib/pricing";
+import { basePrice, describeEstimate } from "@/lib/pricing";
 import { updateStatusAction } from "@/actions/inquiries";
 import {
   inquiryStatuses,
@@ -126,6 +126,10 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
                 low: inquiry.estimateLow,
                 high: inquiry.estimateHigh,
                 isCustom: inquiry.estimateLow === null,
+                // Custom quotes: today's formula price as a starting point for the chat.
+                formulaPrice: inquiry.serviceStyle
+                  ? basePrice(inquiry.guests, inquiry.serviceStyle)
+                  : undefined,
               })}
             </span>
           </p>

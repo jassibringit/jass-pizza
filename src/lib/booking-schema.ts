@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { addDays, format, isBefore, parseISO, startOfToday } from "date-fns";
+import { addDays, addMonths, format, isBefore, parseISO, startOfMonth, startOfToday } from "date-fns";
 import type { Service } from "@/lib/pricing";
 
 export const eventTypes = [
@@ -30,8 +30,12 @@ export function isClosedMonth(date: Date) {
 
 // We need at least this much notice to prepare dough and plan the event.
 export const MIN_LEAD_DAYS = 15;
+// The first date we'd accept: enough notice, then skip past any closed months
+// (so the date picker opens on a bookable month, not December).
 export function earliestEventDate() {
-  return format(addDays(startOfToday(), MIN_LEAD_DAYS), "yyyy-MM-dd");
+  let date = addDays(startOfToday(), MIN_LEAD_DAYS);
+  while (isClosedMonth(date)) date = startOfMonth(addMonths(date, 1));
+  return format(date, "yyyy-MM-dd");
 }
 
 // The date is optional, so emails and the dashboard show this when there isn't one.

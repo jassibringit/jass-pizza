@@ -95,6 +95,28 @@
   }
 }
 
+/* Smooth open/close for the FAQ accordion where supported; elsewhere it opens instantly. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+}
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 300ms ease,
+    content-visibility 300ms allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content {
+    transition: none;
+  }
+}
+
 /* Thin underline that draws in from the left on hover. Put it on the text inside the link. */
 .link-underline {
   background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;

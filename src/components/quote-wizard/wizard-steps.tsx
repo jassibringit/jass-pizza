@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { format, parseISO } from "date-fns";
+import { ChevronDownIcon } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   earliestEventDate,
+  isClosedMonth,
+  seasonNote,
   eventTypes,
   serviceStyles,
   type ServiceStyle,
@@ -146,7 +152,7 @@ export function ServiceStyleStep({
         <StepHeading focus={focusHeading}>
           Will there be <Accent>other food</Accent> at your event?
         </StepHeading>
-        <p className="mt-4 text-ivory-muted">This helps us plan the right number of pizzas for your crowd.</p>
+        <p className="mt-4 text-ivory-muted">This helps us plan the right amount of food for your crowd.</p>
       </Item>
       <Item dir={dir}>
         <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -221,6 +227,68 @@ export function GuestsStep({ dir, focusHeading, data, errors, onChange, onBlur }
   );
 }
 
+// Calendar in a popover: dates before the earliest bookable day and closed months are greyed out.
+function DateField({
+  value,
+  error,
+  onChange,
+}: {
+  value: string;
+  error?: string;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const selected = value ? parseISO(value) : undefined;
+  const earliest = parseISO(earliestEventDate());
+
+  return (
+    <div className="flex items-center gap-4">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          render={
+            <button
+              id="date"
+              type="button"
+              aria-invalid={!!error}
+              aria-describedby={error ? "date-hint date-error" : "date-hint"}
+              className={`${inputClass} flex items-center justify-between gap-2 text-left`}
+            >
+              {selected ? (
+                format(selected, "EEE, MMM d, yyyy")
+              ) : (
+                <span className="text-muted-foreground/70">Pick a date</span>
+              )}
+              <ChevronDownIcon aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
+            </button>
+          }
+        />
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={selected}
+            defaultMonth={selected ?? earliest}
+            startMonth={earliest}
+            disabled={[{ before: earliest }, (day: Date) => isClosedMonth(day)]}
+            onSelect={(day: Date | undefined) => {
+              onChange(day ? format(day, "yyyy-MM-dd") : "");
+              setOpen(false);
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+      {selected && (
+        <button
+          type="button"
+          onClick={() => onChange("")}
+          className="inline-flex min-h-11 shrink-0 items-center text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        >
+          Clear
+        </button>
+      )}
+    </div>
+  );
+}
+
 // ── Step 4: date & place ────────────────────────────────────────────────────
 
 export function DatePlaceStep({ dir, focusHeading, data, errors, onChange, onBlur }: StepProps) {
@@ -237,18 +305,14 @@ export function DatePlaceStep({ dir, focusHeading, data, errors, onChange, onBlu
             <label htmlFor="date" className={labelClass}>
               Event date
             </label>
-            <input
-              id="date"
-              name="date"
-              type="date"
-              min={earliestEventDate()}
+            <DateField
               value={data.date}
-              onChange={(e) => onChange("date", e.target.value)}
-              onBlur={() => onBlur("date")}
-              aria-invalid={!!errors.date}
-              aria-describedby={errors.date ? "date-error" : undefined}
-              className={inputClass}
+              error={errors.date}
+              onChange={(value) => onChange("date", value)}
             />
+            <p id="date-hint" className="text-sm text-muted-foreground">
+              Optional. {seasonNote}
+            </p>
             <FieldError id="date-error" message={errors.date} />
           </div>
           <div className="flex flex-col gap-2">
