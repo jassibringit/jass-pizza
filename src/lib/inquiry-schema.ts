@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { QuoteSchema, serviceStyles } from "./booking-schema";
+import { QuoteSchema, seasonDate, serviceStyles } from "./booking-schema";
 // Where a lead is in the pipeline. The single source of truth:
 // the database column, the validation and the <select> all use this list.
 
@@ -29,6 +29,8 @@ export const ManualInquirySchema = QuoteSchema.extend({
     (v) => (v === "" ? undefined : v),
     z.enum(serviceStyles).optional(),
   ),
+  // No notice rule here: a DM can be for next weekend.
+  date: z.preprocess((v) => (v === "" ? undefined : v), seasonDate.optional()),
   guests: z.coerce.number("Enter a number").int("Use a whole number").min(1, "At least 1 guest"),
   email: z.email("Enter a valid email").max(254, "That email is too long").or(z.literal("")),
   handle: z.string().trim().max(50, "That handle is too long"),

@@ -8,7 +8,7 @@ import {
   type ComponentProps,
 } from "react";
 import { createInquiryAction, type CreateInquiryState } from "@/actions/inquiries";
-import { eventTypes } from "@/lib/booking-schema";
+import { eventTypes, serviceStyleLabels, serviceStyles } from "@/lib/booking-schema";
 import { manualSources, type ManualInquiryErrors } from "@/lib/inquiry-schema";
 
 const legendClass = "font-display text-2xl";
@@ -163,6 +163,32 @@ export function ManualInquiryForm() {
           <TextField name="guests" label="Guests" type="number" inputMode="numeric" min={1} error={errors.guests?.[0]} />
           <TextField name="city" label="City" placeholder="e.g. Brampton" maxLength={100} error={errors.city?.[0]} />
         </div>
+
+        {/* Picking one saves the estimate. "Not sure yet" sends "", which the schema treats as not given. */}
+        <fieldset aria-describedby={errors.serviceStyle ? "serviceStyle-error" : undefined}>
+          <legend className={labelClass}>Food</legend>
+          <ul className="mt-2 flex flex-wrap gap-3">
+            {serviceStyles.map((style) => (
+              <li key={style}>
+                <label className={pillClass}>
+                  <input type="radio" name="serviceStyle" value={style} className="sr-only" />
+                  {serviceStyleLabels[style]}
+                </label>
+              </li>
+            ))}
+            <li>
+              <label className={pillClass}>
+                <input type="radio" name="serviceStyle" value="" defaultChecked className="sr-only" />
+                Not sure yet
+              </label>
+            </li>
+          </ul>
+          {errors.serviceStyle && (
+            <p id="serviceStyle-error" className="mt-3 text-sm text-destructive">
+              {errors.serviceStyle[0]}
+            </p>
+          )}
+        </fieldset>
       </fieldset>
 
       {/* 4. Anything else */}

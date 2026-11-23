@@ -48,13 +48,16 @@ export function formatEventDate(date: string | null | undefined, pattern = "EEEE
 const emptyToUndefined = (value: unknown) =>
   typeof value === "string" && value.trim() === "" ? undefined : value;
 
-const eventDate = z.iso
+// A real date in season. Leads the owner adds by hand use this as is.
+export const seasonDate = z.iso
   .date("Enter a valid date")
-  .refine(
-    (d) => !isBefore(parseISO(d), addDays(startOfToday(), MIN_LEAD_DAYS)),
-    `Pick a date at least ${MIN_LEAD_DAYS} days from today`,
-  )
   .refine((d) => !isClosedMonth(parseISO(d)), seasonNote);
+
+// Website inquiries also need enough notice.
+const eventDate = seasonDate.refine(
+  (d) => !isBefore(parseISO(d), addDays(startOfToday(), MIN_LEAD_DAYS)),
+  `Pick a date at least ${MIN_LEAD_DAYS} days from today`,
+);
 
 // One schema per wizard step, so each screen only validates its own fields.
 export const stepSchemas = [
