@@ -19,12 +19,12 @@ function getFaqs() {
     {
       question: "What happens on the day?",
       answer:
-        "Our team arrives about an hour ahead with our outdoor ovens and everything we need. We set up, fire up and par-bake the bases before your guests sit down, so you can enjoy your own party.",
+        "Our team arrives about an hour ahead to set up our station, fire up the ovens and get everything prepped, so we're ready to go by the time your guests are hungry and you can enjoy your own party.",
     },
     {
       question: "How fast do the pizzas come out?",
       answer:
-        "We par-bake a few bases when we arrive, then finish and make the rest fresh right through the event. The first pizzas are out fast and there's no queue: every slice comes off the fire hot.",
+        "Each pizza takes about 2 to 3 minutes from stretching the dough to coming out of the oven, and we make them fresh right through the event. Sometimes we par-bake a few bases when we arrive to get the line moving, and every slice comes off the fire hot.",
     },
     {
       question: "How long do you serve for?",
@@ -46,7 +46,7 @@ function getFaqs() {
     },
     {
       question: "How do I book?",
-      answer: `Message us on WhatsApp or Instagram with your date, guest count and city. A ${deposit} non-refundable deposit holds your date, and the balance is due on the day.`,
+      answer: `Message us on Instagram or WhatsApp with your date, guest count and city. A ${deposit} non-refundable deposit holds your date, and the balance is due on the day.`,
     },
   ];
 }

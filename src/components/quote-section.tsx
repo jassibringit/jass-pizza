@@ -86,23 +86,23 @@ export function QuoteSection() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
-              href={contact.whatsapp}
+              href={contact.instagramDm}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground transition-colors hover:bg-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
-              <WhatsAppIcon className="size-4" />
-              WhatsApp us <Arrow />
+              <InstagramIcon className="size-4" />
+              DM on Instagram <Arrow />
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
             <a
-              href={contact.instagramDm}
+              href={contact.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-gold px-6 py-3 text-gold transition-colors hover:bg-gold hover:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
-              <InstagramIcon className="size-4" />
-              DM on Instagram <Arrow />
+              <WhatsAppIcon className="size-4" />
+              WhatsApp us <Arrow />
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
