@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { Arrow } from "@/components/arrow";
 
 const steps = [
   {
@@ -42,13 +40,6 @@ export function HowItWorks() {
             </li>
           ))}
         </ol>
-
-        <Link
-          href="#quote"
-          className="group mt-12 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold px-6 py-3 text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring md:mt-14"
-        >
-          Get a quote <Arrow />
-        </Link>
       </div>
     </section>
   );

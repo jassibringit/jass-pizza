@@ -4,8 +4,8 @@ import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/brand-icon
 import { contact } from "@/lib/contact";
 
 const socials = [
-  { label: "WhatsApp", href: contact.whatsapp, icon: <WhatsAppIcon /> },
   { label: "Instagram", href: contact.instagram, icon: <InstagramIcon /> },
+  { label: "WhatsApp", href: contact.whatsapp, icon: <WhatsAppIcon /> },
   { label: "TikTok", href: contact.tiktok, icon: <TikTokIcon /> },
 ];
 

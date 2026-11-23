@@ -85,12 +85,12 @@ export default function PrivacyPage() {
             <p className="mt-3">
               You can ask what we have about you, or ask us to delete it, any time. Just message
               us on{" "}
-              <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                WhatsApp
-              </a>{" "}
-              or{" "}
               <a href={contact.instagramDm} target="_blank" rel="noopener noreferrer" className={linkClass}>
                 Instagram
+              </a>{" "}
+              or{" "}
+              <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                WhatsApp
               </a>
               .
             </p>

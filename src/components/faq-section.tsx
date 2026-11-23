@@ -82,13 +82,13 @@ export function FaqSection() {
             Have a question we haven&apos;t answered? We&apos;d love to hear from you.
           </p>
           <a
-            href={contact.whatsapp}
+            href={contact.instagramDm}
             target="_blank"
             rel="noopener noreferrer"
             className="group mt-4 inline-flex min-h-11 items-center gap-2 text-sm text-gold transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
             Let&apos;s talk <Arrow />
-            <span className="sr-only"> on WhatsApp (opens in a new tab)</span>
+            <span className="sr-only"> on Instagram (opens in a new tab)</span>
           </a>
         </div>
 
