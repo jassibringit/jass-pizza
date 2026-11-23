@@ -55,7 +55,7 @@ export function QuoteSection() {
 
           <div className="mt-8 border-t border-border pt-6 text-sm">
             <p className="text-gold">
-              {minimum} minimum · {PRICING.deposit * 100}% deposit holds your date
+              {minimum} minimum · {PRICING.deposit * 100}% non-refundable deposit holds your date
             </p>
             <p className="mt-2 text-muted-foreground">
               Travel fee outside Peel Region · {seasonNote}

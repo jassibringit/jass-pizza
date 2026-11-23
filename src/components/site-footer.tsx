@@ -24,7 +24,13 @@ export function SiteFooter() {
             <Image src="/logo-round.png" alt="Jass Pizza home" width={80} height={80} className="size-14 md:-my-3 md:size-20" />
           </Link>
           <p className="text-sm text-muted-foreground">
-            © Jass Pizza · Brampton, Peel &amp; the GTA
+            © Jass Pizza · Brampton, Peel &amp; the GTA ·{" "}
+            <Link
+              href="/privacy"
+              className="underline-offset-4 transition-colors hover:text-gold-bright hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+            >
+              Privacy
+            </Link>
           </p>
         </div>
 

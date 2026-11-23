@@ -117,6 +117,10 @@ export function MenuSection() {
               </li>
             ))}
           </ul>
+          <p className="mt-8 max-w-xl text-sm text-muted-foreground">
+            Contains wheat and milk. Cannoli can include pistachio. Made in a kitchen that handles
+            nuts, so we can&apos;t guarantee anything is allergen-free.
+          </p>
         </div>
       </div>
     </section>
