@@ -28,7 +28,7 @@ function getFaqs() {
     },
     {
       question: "How long do you serve for?",
-      answer: `Live serving runs ${serving.min} to ${serving.max} hours depending on the size of your event, and your estimate shows your exact time. Setup and takedown happen outside that. Want us longer? It's ${formatMoney(PRICING.extraHalfHour)} per extra half hour.`,
+      answer: `Live serving runs ${serving.min} to ${serving.max} hours depending on the size of your event, and we'll confirm your exact time with your quote. Setup and takedown happen outside that. Want us longer? It's ${formatMoney(PRICING.extraHalfHour)} per extra half hour.`,
     },
     {
       question: "What do you need from us?",
@@ -36,9 +36,9 @@ function getFaqs() {
         "About a 10 × 10 ft space on level ground outdoors, room to park nearby for unloading, and clearance for a little smoke. A backyard, driveway or patio all work, even if your guests are indoors.",
     },
     {
-      question: "Can you handle dietary needs?",
+      question: "Can you handle dietary needs and allergies?",
       answer:
-        "Just tell us what's needed in your inquiry or a message, and we'll let you know what we can do for your event.",
+        "Tell us what's needed in your message and we'll let you know what we can do. Our pizzas contain wheat and milk, and the cannoli can include pistachio. Everything is made in a kitchen that handles nuts, so we can't guarantee anything is allergen-free.",
     },
     {
       question: "Where and when do you cater?",
@@ -46,7 +46,7 @@ function getFaqs() {
     },
     {
       question: "How do I book?",
-      answer: `Check your date with the form above, or message us your date, guest count and city. A ${deposit} deposit holds your date, and the balance is due on the day.`,
+      answer: `Message us on WhatsApp or Instagram with your date, guest count and city. A ${deposit} non-refundable deposit holds your date, and the balance is due on the day.`,
     },
   ];
 }

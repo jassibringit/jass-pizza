@@ -1,12 +1,12 @@
 const occasions = [
-  "weddings",
-  "mehndi & pre-wedding nights",
-  "receptions",
-  "backyard parties",
-  "birthdays",
-  "anniversaries",
-  "baby showers",
-  "office parties",
+  "Weddings",
+  "Pre-wedding",
+  "Receptions",
+  "Backyard parties",
+  "Birthdays",
+  "Anniversaries",
+  "Baby showers",
+  "Office parties",
 ];
 
 // The track holds 4 copies of the list and slides left by half its width

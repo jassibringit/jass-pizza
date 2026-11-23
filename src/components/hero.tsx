@@ -5,7 +5,7 @@ export function Hero() {
   return (
     <section
       aria-label="Intro"
-      className="relative flex min-h-[calc(100svh-5.5rem)] items-end overflow-hidden bg-background lg:items-center"
+      className="relative flex min-h-svh items-end overflow-hidden bg-background lg:items-center"
     >
       {/* blurred glow behind the text */}
       <div aria-hidden="true" className="absolute inset-0 hidden overflow-hidden lg:block">
@@ -14,7 +14,7 @@ export function Hero() {
       </div>
       <HeroVideo />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:gap-7 lg:py-16">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:gap-7 lg:pt-28 lg:pb-16">
         <p className="animate-rise text-[13px] tracking-[0.25em] text-gold uppercase motion-reduce:animate-none">
           Private live pizza experience · GTA
         </p>

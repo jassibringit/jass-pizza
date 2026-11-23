@@ -13,7 +13,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Jass Pizza | Live Pizza Catering in Brampton & the GTA ",
+  title: "Jass Pizza | Live Pizza Catering in Brampton & the GTA",
   description: "A private pizzeria, brought to your event. Hand-stretched and fired live for weddings, celebrations and corporate events across Brampton and the GTA. Limited dates. Request a quote.",
 };
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${playfair.variable} h-full antialiased scroll-smooth motion-reduce:scroll-auto`}
+      className={`${dmSans.variable} ${playfair.variable} h-full antialiased scroll-smooth scroll-pt-24 motion-reduce:scroll-auto`}
       
     >
       <body className="min-h-full flex flex-col">{children}</body>

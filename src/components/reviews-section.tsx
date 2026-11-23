@@ -7,7 +7,7 @@ const reviews: Review[] = [
     rating: 5,
     date: "August 2026",
     text: "We hired Jass Pizza for our baby shower at Heartlake Conservation, and we honestly couldn’t have been happier with them! 🍕\n\nDespite the horrible weather, they showed up and served some seriously amazing pizza. We chose a selection of four different pizzas, and every single one was a hit. Our family and friends couldn’t stop talking about how good it was!\n\nFrom our very first interaction, Jass Pizza was professional, friendly, and so easy to work with. Even when a few last-minute roadblocks came up, they handled everything quickly and without any stress on our end.\n\nThey were such a great addition to our special day, and we would absolutely recommend Jass Pizza to anyone looking for great food and great service!",
-    event: "Bridal shower",
+    event: "Baby shower",
   },
   {
     name: "Jeety G.",

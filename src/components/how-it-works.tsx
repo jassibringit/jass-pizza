@@ -4,7 +4,7 @@ import { Arrow } from "@/components/arrow";
 const steps = [
   {
     title: "We set up",
-    body: "We arrive 1 to 2 hours before your event to style the station, heat the ovens and prep every topping. By the time your guests walk in, everything is ready and you never see the work behind it.",
+    body: "We arrive about an hour before your event to style the station, heat the ovens and prep every topping. By the time your guests walk in, everything is ready and you never see the work behind it.",
   },
   {
     title: "We fire live",
@@ -47,7 +47,7 @@ export function HowItWorks() {
           href="#quote"
           className="group mt-12 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold px-6 py-3 text-foreground transition-colors hover:border-gold-bright hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring md:mt-14"
         >
-          Get your estimate <Arrow />
+          Get a quote <Arrow />
         </Link>
       </div>
     </section>

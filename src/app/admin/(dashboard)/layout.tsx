@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LogOut } from "lucide-react";
@@ -13,9 +14,9 @@ function Logo() {
   return (
     <Link
       href="/"
-      className="inline-flex min-h-11 items-center font-display text-2xl font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+      className="inline-flex min-h-11 items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
     >
-      jass pizza<span className="text-gold">.</span>
+      <Image src="/logo-wordmark.png" alt="Jass Pizza home" width={52} height={40} className="h-10 w-auto" />
     </Link>
   );
 }

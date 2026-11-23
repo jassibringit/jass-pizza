@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/brand-icons";
 import { contact } from "@/lib/contact";
@@ -14,32 +15,20 @@ const linkClass =
 export function SiteFooter() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between md:gap-8">
-        {/* Brand */}
-        <div>
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-6 md:flex-row md:items-center md:justify-between md:gap-8">
+        <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="font-display text-2xl font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+            className="shrink-0 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
-            jass pizza<span className="text-gold">.</span>
+            <Image src="/logo-round.png" alt="Jass Pizza home" width={80} height={80} className="size-14 md:-my-3 md:size-20" />
           </Link>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             © Jass Pizza · Brampton, Peel &amp; the GTA
           </p>
         </div>
 
-        {/* Contact + socials in one row; wraps on small phones */}
-        <ul className="flex flex-wrap gap-x-6">
-          <li>
-            <a href={`tel:${contact.phoneLink}`} className={linkClass}>
-              {contact.phone}
-            </a>
-          </li>
-          <li>
-            <a href={`mailto:${contact.email}`} className={linkClass}>
-              {contact.email}
-            </a>
-          </li>
+        <ul className="flex flex-wrap items-center gap-x-6">
           {socials.map((social) => (
             <li key={social.label}>
               <a

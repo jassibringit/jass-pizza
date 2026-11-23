@@ -24,6 +24,7 @@ export const menu: MenuItem[] = [
     title: "Paneer Tikka Delight",
     description:
       "Tomato sauce, tandoori paneer, bell peppers, onions, mozzarella.",
+    image: "/menu/paneer.png",
   },
   {
     title: "Classic Pepperoni",

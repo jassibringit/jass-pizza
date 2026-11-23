@@ -21,7 +21,7 @@ export const PRICING = {
     main: { small: 2, normal: 2.5, long: 3, longOverPizzas: 60 },
     snack: { small: 1.5, normal: 1.5, long: 2.5, longOverPizzas: 40 },
   },
-  extraHalfHour: 60, // each extra half hour of live serving
+  extraHalfHour: 75, // each extra half hour of live serving
   deposit: 0.3, // 30% holds the date
   flavours: { small: 3, standard: 4 },
 } as const;

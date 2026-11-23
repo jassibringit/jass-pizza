@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { MobileMenu } from "./mobile-menu";
+import { StickyHeader } from "./sticky-header";
 
 const navLinks = [
   { href: "#menu", label: "Menu" },
@@ -11,13 +13,13 @@ const navLinks = [
 
 export function SiteHeader() {
   return (
-    <header className="relative border-b border-border">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5">
+    <StickyHeader>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 transition-[padding] duration-300 max-md:group-data-[scrolled=true]/header:py-1.5 md:px-6 md:py-5">
         <Link
           href="/"
-          className="font-display text-3xl font-semibold text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          className="shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
-          jass pizza<span className="text-gold">.</span>
+          <Image src="/logo-round.png" alt="Jass Pizza home" width={80} height={80} priority className="size-14 transition-[width,height] duration-300 max-md:group-data-[scrolled=true]/header:size-10 md:-my-4 md:size-20" />
         </Link>
 
         <nav aria-label="Main" className="hidden md:block">
@@ -44,6 +46,6 @@ export function SiteHeader() {
 
         <MobileMenu links={navLinks} />
       </div>
-    </header>
+    </StickyHeader>
   );
 }
