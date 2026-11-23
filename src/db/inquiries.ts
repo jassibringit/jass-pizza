@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { inquiries } from "@/db/schema";
@@ -57,11 +58,12 @@ export async function saveManualInquiry(data: ManualInquiryData) {
   });
 }
 
-// All inquiries, newest first.
-export async function getInquiries() {
-    await requireOwner();
+// All inquiries, newest first. cache() shares one result per request, so the
+// sidebar badge and the page don't each hit the database.
+export const getInquiries = cache(async () => {
+  await requireOwner();
   return db.select().from(inquiries).orderBy(desc(inquiries.createdAt));
-}
+});
 
 // Moves one inquiry to a new pipeline status.
 export async function updateInquiryStatus(id: number, status: InquiryStatus) {
