@@ -1,1 +1,1 @@
-export const siteUrl = "https://jasspizza.ca";
+export const siteUrl = "https://www.jasspizza.ca";
