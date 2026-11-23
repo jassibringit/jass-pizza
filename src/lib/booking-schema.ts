@@ -30,6 +30,7 @@ export function isClosedMonth(date: Date) {
 
 // We need at least this much notice to prepare dough and plan the event.
 export const MIN_LEAD_DAYS = 15;
+export const MIN_GUESTS = 10;
 // The first date we'd accept: enough notice, then skip past any closed months
 // (so the date picker opens on a bookable month, not December).
 export function earliestEventDate() {
@@ -67,7 +68,7 @@ export const stepSchemas = [
     guests: z.coerce
       .number("Enter a number")
       .int("Use a whole number")
-      .min(10, "At least 10 guests")
+      .min(MIN_GUESTS, `At least ${MIN_GUESTS} guests`)
       .max(1000, "For very large events, mention it in your notes"),
   }),
   z.object({

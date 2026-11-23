@@ -72,3 +72,8 @@ export async function updateInquiryStatus(id: number, status: InquiryStatus) {
 export async function deleteInquiry(id: number) {
   await db.delete(inquiries).where(eq(inquiries.id, id));
 }
+
+export async function getInquiry(id: number) {
+  const rows = await db.select().from(inquiries).where(eq(inquiries.id, id));
+  return rows[0];
+}

@@ -11,6 +11,7 @@ import {
 } from "@/lib/inquiry-schema";
 import { FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/brand-icons";
 import { DeleteInquiryButton } from "./delete-inquiry-button";
+import DraftReplyButton from "./draft-reply-button";
 
 // A label and logo per source, so you can see at a glance where a lead came from.
 // Record<InquirySource, …>: adding a source without a logo here is a type error.
@@ -209,6 +210,9 @@ export function InquiryCard({ inquiry }: InquiryCardProps) {
       </form>
 
       <DeleteInquiryButton id={inquiry.id} name={inquiry.name} />
+      <DraftReplyButton
+        inquiryId={ inquiry.id }
+      />
     </article>
   );
 }

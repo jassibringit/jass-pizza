@@ -3,7 +3,8 @@ import Image from "next/image";
 // To add a photo: put it in public/menu/ and add e.g. image: "/menu/margherita.jpg"
 type MenuItem = { title: string; description: string; image?: string };
 
-const menu: MenuItem[] = [
+// Also read by the AI reply prompt (src/lib/ai/business-rules.ts).
+export const menu: MenuItem[] = [
   {
     title: "Classic Margherita",
     description: "Tomato sauce, fresh mozzarella, basil, olive oil.",
@@ -41,7 +42,7 @@ const menu: MenuItem[] = [
   },
 ];
 
-const addOns = [
+export const addOns = [
   {
     title: "Fresh-Filled Cannoli",
     description:
