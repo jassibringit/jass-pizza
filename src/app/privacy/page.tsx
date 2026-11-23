@@ -5,8 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { contact } from "@/lib/contact";
 
 export const metadata: Metadata = {
-  title: "Privacy | Jass Pizza",
+  title: "Privacy",
   description: "How Jass Pizza handles the details you share with us.",
+  alternates: { canonical: "/privacy" },
 };
 
 const linkClass =

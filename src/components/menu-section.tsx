@@ -76,7 +76,7 @@ export function MenuSection() {
                 {item.image ? (
                   <Image
                     src={item.image}
-                    alt=""
+                    alt={`${item.title} pizza`}
                     fill
                     sizes="(min-width: 1024px) 25vw, 50vw"
                     className="object-contain transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"

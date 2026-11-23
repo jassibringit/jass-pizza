@@ -16,7 +16,7 @@ export function Hero() {
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:gap-7 lg:pt-28 lg:pb-16">
         <p className="animate-rise text-[13px] tracking-[0.25em] text-gold uppercase motion-reduce:animate-none">
-          Private live pizza experience · GTA
+          Live pizza catering · Brampton &amp; the GTA
         </p>
 
         <h1 className="animate-rise [animation-delay:120ms] motion-reduce:animate-none max-w-4xl font-display text-shadow-lg text-shadow-background/60 text-5xl leading-[0.98] font-semibold md:text-7xl lg:max-w-2xl lg:text-8xl">

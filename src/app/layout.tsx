@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -12,9 +13,26 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
+const description =
+  "Live pizza catering in Brampton, Peel and the GTA. Fresh 12\" pizzas hand-stretched and baked in front of your guests at weddings, birthdays and corporate events.";
+
 export const metadata: Metadata = {
-  title: "Jass Pizza | Live Pizza Catering in Brampton & the GTA",
-  description: "A private pizzeria, brought to your event. Hand-stretched and fired live for weddings, celebrations and corporate events across Brampton and the GTA. Limited dates. Request a quote.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Jass Pizza | Live Pizza Catering in Brampton & the GTA",
+    template: "%s | Jass Pizza",
+  },
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_CA",
+    siteName: "Jass Pizza",
+    url: "/",
+    title: "Jass Pizza | Live Pizza Catering in Brampton & the GTA",
+    description,
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

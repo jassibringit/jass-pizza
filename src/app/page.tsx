@@ -1,4 +1,4 @@
-import { CraftSection } from "@/components/craft-section";
+import { BusinessSchema } from "@/components/business-schema";
 import { FaqSection } from "@/components/faq-section";
 import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-it-works";
@@ -24,6 +24,7 @@ export default function Home() {
         <FaqSection />
       </main>
       <SiteFooter />
+      <BusinessSchema />
     </>
   );
 }
