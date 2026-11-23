@@ -44,7 +44,7 @@ export default function PricingPage() {
     <main className="mx-auto max-w-7xl px-6 py-10 md:py-16">
       <p className="text-[13px] tracking-[0.25em] text-gold uppercase">Dashboard</p>
       <h1 className="mt-4 font-display text-4xl leading-none font-semibold md:text-6xl">
-        pricing<span className="text-gold">.</span>
+        Pricing<span className="text-gold">.</span>
       </h1>
       <p className="mt-4 max-w-2xl text-ivory-muted">
         Your rate card and a calculator for quoting DMs and calls. To change a price, edit{" "}
@@ -54,7 +54,7 @@ export default function PricingPage() {
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         <section aria-labelledby="rates-heading" className="border border-border p-6 md:p-8">
           <h2 id="rates-heading" className="font-display text-2xl font-semibold">
-            rates<span className="text-gold">.</span>
+            Rates<span className="text-gold">.</span>
           </h2>
           <table className="mt-6 w-full text-left">
             <thead className="text-xs text-muted-foreground">

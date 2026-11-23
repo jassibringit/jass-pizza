@@ -1,14 +1,14 @@
 const steps = [
   {
-    title: "the dough",
+    title: "The dough",
     body: "Mixed in-house, then cold-fermented upto 24 hours . That's where the flavour, the chew and the light, blistered crust come from.",
   },
   {
-    title: "the flavours",
+    title: "The flavours",
     body: "Tandoori-spiced paneer next to a classic margherita, on sauce we make in-house. Familiar favourites and bold new ones, so there's a slice for every guest.",
   },
   {
-    title: "the station",
+    title: "The station",
     body: "Our signature black and gold, an ivory runner and warm wood boards. A setup that looks as good as the pizza, and one your guests will want to photograph.",
   },
 ];
@@ -19,7 +19,7 @@ export function CraftSection() {
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-32">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
           <h2 className="max-w-2xl font-display text-4xl leading-none font-semibold md:text-6xl">
-            made the slow, traditional way<span className="text-gold">.</span>
+            Made the slow, traditional way<span className="text-gold">.</span>
           </h2>
           <p className="text-lg leading-relaxed text-ivory-muted md:max-w-sm">
             No shortcuts. Just good ingredients and plenty of time.

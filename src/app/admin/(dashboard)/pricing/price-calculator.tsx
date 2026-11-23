@@ -27,7 +27,7 @@ export function PriceCalculator() {
   return (
     <div className="border border-border bg-card p-6 md:p-8">
       <h2 className="font-display text-2xl font-semibold">
-        quick quote<span className="text-gold">.</span>
+        Quick quote<span className="text-gold">.</span>
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">For DMs and calls. Same maths as the website.</p>
 

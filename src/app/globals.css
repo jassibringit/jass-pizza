@@ -117,6 +117,27 @@
   }
 }
 
+/* hero video left edge fade (eased, a plain 2-stop gradient leaves a visible line) */
+@utility hero-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgb(0 0 0 / 0.08) 4%,
+    rgb(0 0 0 / 0.25) 9%,
+    rgb(0 0 0 / 0.5) 14%,
+    rgb(0 0 0 / 0.75) 19%,
+    rgb(0 0 0 / 0.92) 25%,
+    black 32%
+  );
+}
+
+.hero-fade {
+  --fade: var(--color-background);
+  background:
+    linear-gradient(to top, var(--fade) 0%, transparent 30%),
+    linear-gradient(to bottom, color-mix(in oklab, var(--fade) 60%, transparent) 0%, transparent 20%);
+}
+
 /* Thin underline that draws in from the left on hover. Put it on the text inside the link. */
 .link-underline {
   background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;

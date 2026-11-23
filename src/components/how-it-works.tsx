@@ -3,15 +3,15 @@ import { Arrow } from "@/components/arrow";
 
 const steps = [
   {
-    title: "we set up",
+    title: "We set up",
     body: "We arrive 1 to 2 hours before your event to style the station, heat the ovens and prep every topping. By the time your guests walk in, everything is ready and you never see the work behind it.",
   },
   {
-    title: "we fire live",
+    title: "We fire live",
     body: "Fresh dough is stretched by hand and baked right in front of your guests, with new pizzas coming out all through your serving window. It quickly becomes the spot everyone gathers around, watching, chatting and taking photos of the setup.",
   },
   {
-    title: "we pack up",
+    title: "We pack up",
     body: "Once everyone has eaten their fill, we clean our station, pack the ovens and leave the space just as we found it. No mess and nothing for you to handle. You just enjoy the rest of your night.",
   },
 ];
@@ -24,7 +24,7 @@ export function HowItWorks() {
           How it works
         </p>
         <h2 className="mt-4 font-display text-4xl leading-none font-semibold md:text-6xl">
-          you host. we handle the rest<span className="text-gold">.</span>
+          You host. We handle the rest<span className="text-gold">.</span>
         </h2>
 
         <ol className="mt-10 grid gap-10 md:mt-14 md:grid-cols-3 md:gap-8">

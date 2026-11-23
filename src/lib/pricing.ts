@@ -8,7 +8,7 @@ export const PRICING = {
   includedGuests: { main: 30, snack: 45 },
   extraGuestRate: { main: 18, snack: 15 },
   // The estimate shows price to price + this (room for travel, date, add-ons).
-  rangeSpread: 200,
+  rangeSpread: 400,
   // From this price up, events get a custom quote after a chat instead of a number.
   customQuoteFrom: 2000,
   guestsPerPizza: { main: 1.3, snack: 2 }, // snack portions are smaller

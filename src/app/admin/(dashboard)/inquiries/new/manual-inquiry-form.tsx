@@ -194,7 +194,7 @@ export function ManualInquiryForm() {
       {/* 4. Anything else */}
       <div className="flex flex-col gap-2">
         <label htmlFor="message" className={legendClass}>
-          notes<span className="text-gold">.</span>
+          Notes<span className="text-gold">.</span>
         </label>
         <textarea
           id="message"

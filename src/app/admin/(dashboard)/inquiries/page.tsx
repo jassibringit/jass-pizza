@@ -16,7 +16,7 @@ export default function InquiriesPage() {
       </p>
       <div className="mt-4 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <h1 className="font-display text-4xl leading-none font-semibold md:text-6xl">
-          inquiries<span className="text-gold">.</span>
+          Inquiries<span className="text-gold">.</span>
         </h1>
         <Link
           href="/admin/inquiries/new"

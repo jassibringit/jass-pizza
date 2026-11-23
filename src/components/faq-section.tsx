@@ -1,5 +1,7 @@
-import { Plus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { Arrow } from "@/components/arrow";
 import { seasonNote } from "@/lib/booking-schema";
+import { contact } from "@/lib/contact";
 import { PRICING, formatMoney, servingTimeRange } from "@/lib/pricing";
 
 // Answers are plain text so the same list feeds the page and the search-engine data below.
@@ -65,29 +67,46 @@ export function FaqSection() {
 
   return (
     <section id="faq" aria-labelledby="faq-heading" className="border-t border-border">
-      <div className="mx-auto max-w-3xl px-6 py-16 md:py-28">
-        <div className="text-center">
-          <p className="text-[13px] tracking-[0.25em] text-gold uppercase">Good to know</p>
+      {/* Phones: heading, then the questions. Desktop: heading on the left, questions on the right. */}
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:py-28 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
+        <div className="lg:sticky lg:top-28">
+          <p className="text-[13px] tracking-[0.25em] text-gold uppercase">The little details</p>
           <h2
             id="faq-heading"
-            className="mt-4 font-display text-4xl leading-none font-semibold md:text-6xl"
+            className="mt-4 font-display text-5xl leading-none font-semibold md:text-6xl"
           >
-            questions<span className="text-gold">.</span>
+            Good to <em className="font-normal text-gold">know</em>
+            <span className="text-gold">.</span>
           </h2>
+          <p className="mt-5 max-w-sm leading-relaxed text-ivory-muted">
+            Have a question we haven&apos;t answered? We&apos;d love to hear from you.
+          </p>
+          <a
+            href={contact.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-4 inline-flex min-h-11 items-center gap-2 text-sm text-gold transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          >
+            Let&apos;s talk <Arrow />
+            <span className="sr-only"> on WhatsApp (opens in a new tab)</span>
+          </a>
         </div>
 
-        <div className="mt-10 border-t border-border md:mt-14">
-          {faqs.map((faq) => (
+        <div className="border-t border-border">
+          {faqs.map((faq, i) => (
             // name="faq": opening one question closes the others, no JavaScript needed.
             <details key={faq.question} name="faq" className="faq-item group border-b border-border">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-xl transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:text-2xl [&::-webkit-details-marker]:hidden">
-                {faq.question}
-                <Plus
+              <summary className="flex min-h-14 cursor-pointer list-none items-center gap-4 py-5 transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
+                <span aria-hidden="true" className="w-6 shrink-0 text-xs text-gold tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="flex-1 font-display text-xl md:text-2xl">{faq.question}</span>
+                <ChevronDown
                   aria-hidden="true"
-                  className="size-5 shrink-0 text-gold transition-transform duration-300 group-open:rotate-45 motion-reduce:transition-none"
+                  className="size-5 shrink-0 text-gold transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none"
                 />
               </summary>
-              <p className="pb-6 leading-relaxed text-ivory-muted">{faq.answer}</p>
+              <p className="pb-6 pl-10 leading-relaxed text-ivory-muted">{faq.answer}</p>
             </details>
           ))}
         </div>

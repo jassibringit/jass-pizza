@@ -13,6 +13,7 @@ export const menu: MenuItem[] = [
   {
     title: "Cheese Pizza",
     description: "Tomato sauce, a blend of mozzarella and parmesan.",
+    image: "/menu/cheese.png",
   },
   {
     title: "Roasted Garlic Bianca",
@@ -59,7 +60,7 @@ export function MenuSection() {
         </p>
         <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
           <h2 className="font-display text-4xl leading-none font-semibold md:text-6xl">
-            pick your pies<span className="text-gold">.</span>
+            Pick your pies<span className="text-gold">.</span>
           </h2>
           <p className="text-lg leading-relaxed text-ivory-muted md:max-w-sm md:text-right">
             Every sauce and dough made in-house. Choose up to four for your

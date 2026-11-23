@@ -15,12 +15,12 @@ import {
 describe("estimate: price range", () => {
   it.each([
     // guests, service, low, high
-    [40, "main", 1030, 1230], // $850 + 10 × $18
-    [50, "main", 1210, 1410],
-    [60, "main", 1390, 1590],
-    [80, "main", 1750, 1950],
-    [60, "snack", 1075, 1275], // $850 + 15 × $15
-    [100, "snack", 1675, 1875],
+    [40, "main", 1030, 1430], // $850 + 10 × $18
+    [50, "main", 1210, 1610],
+    [60, "main", 1390, 1790],
+    [80, "main", 1750, 2150],
+    [60, "snack", 1075, 1475], // $850 + 15 × $15
+    [100, "snack", 1675, 2075],
   ] as const)("%i guests, %s → $%i–$%i", (guests, service, low, high) => {
     const result = estimate({ guests, service });
     expect(result.isCustom).toBe(false);

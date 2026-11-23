@@ -28,7 +28,7 @@ export default function LoginPage() {
         Dashboard
       </p>
       <h1 className="mt-4 font-display text-4xl leading-none font-semibold md:text-5xl">
-        sign in<span className="text-gold">.</span>
+        Sign in<span className="text-gold">.</span>
       </h1>
       <SignInForm />
     </main>
