@@ -42,7 +42,7 @@ const reviews: Review[] = [
 export function ReviewsSection() {
   return (
     <section aria-labelledby="reviews-heading">
-      <div className="mx-auto max-w-7xl px-6 py-12 md:py-20">
+      <div className="mx-auto max-w-7xl px-6 py-10 md:py-20">
         <h2
           id="reviews-heading"
           className="font-display text-4xl leading-none font-semibold md:text-6xl"
@@ -50,7 +50,7 @@ export function ReviewsSection() {
           Reviews<span className="text-gold">.</span>
         </h2>
 
-        <ul className="mt-8 columns-1 gap-4 md:mt-10 md:columns-2 lg:columns-3">
+        <ul className="mt-6 columns-1 gap-4 md:mt-10 md:columns-2 lg:columns-3">
           {reviews.map((review) => (
             <li key={review.name} className="reveal mb-2 break-inside-avoid">
               <figure className="flex flex-col gap-1 border border-border bg-card p-6 transition-colors duration-300 hover:border-gold/50 md:gap-4">

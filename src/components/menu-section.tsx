@@ -55,7 +55,7 @@ export const addOns = [
 export function MenuSection() {
   return (
     <section id="menu" className="border-y border-border bg-card">
-      <div className="mx-auto max-w-7xl px-6 py-16 md:py-32">
+      <div className="mx-auto max-w-7xl px-6 py-12 md:py-32">
         <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
           The menu
         </p>
@@ -64,12 +64,11 @@ export function MenuSection() {
             Pick your pies<span className="text-gold">.</span>
           </h2>
           <p className="text-lg leading-relaxed text-ivory-muted md:max-w-sm md:text-right">
-            Every sauce and dough made in-house. Choose up to four for your
-            event.
+            Every sauce and dough made in-house.
           </p>
         </div>
 
-        <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-16 md:gap-x-7 md:gap-y-14 lg:grid-cols-4">
+        <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:mt-16 md:gap-x-7 md:gap-y-14 lg:grid-cols-4">
           {menu.map((item) => (
             <li key={item.title} className="reveal group flex flex-col gap-3 md:gap-4">
               <div className="relative aspect-4/4 overflow-hidden border border-border bg-secondary transition-colors duration-500 group-hover:border-gold/50">
@@ -101,7 +100,7 @@ export function MenuSection() {
           ))}
         </ul>
 
-        <div className="mt-12 border-t border-gold/50 pt-8 md:mt-16">
+        <div className="mt-10 border-t border-gold/50 pt-6 md:mt-16">
           <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
             Add-on
           </p>
@@ -117,7 +116,7 @@ export function MenuSection() {
               </li>
             ))}
           </ul>
-          <p className="mt-8 max-w-xl text-sm text-muted-foreground">
+          <p className="mt-6 max-w-xl text-sm text-muted-foreground">
             Contains wheat and milk. Cannoli can include pistachio. Made in a kitchen that handles
             nuts, so we can&apos;t guarantee anything is allergen-free.
           </p>

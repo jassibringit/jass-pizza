@@ -1,6 +1,6 @@
 const occasions = [
   "Weddings",
-  "Pre-wedding",
+  "Pre-weddings",
   "Receptions",
   "Backyard parties",
   "Birthdays",

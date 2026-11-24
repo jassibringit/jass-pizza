@@ -29,7 +29,7 @@ export function QuoteSection() {
 
   return (
     <section id="quote" aria-labelledby="quote-heading" className="border-t border-border bg-card">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:py-28 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
+      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:py-28 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
         <div>
           <p className="text-[13px] tracking-[0.25em] text-gold uppercase">A good place to start</p>
           <h2

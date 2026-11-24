@@ -68,7 +68,7 @@ export function FaqSection() {
   return (
     <section id="faq" aria-labelledby="faq-heading" className="border-t border-border">
       {/* Phones: heading, then the questions. Desktop: heading on the left, questions on the right. */}
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:py-28 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
+      <div className="mx-auto grid max-w-7xl gap-6 px-6 py-12 md:py-28 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
         <div className="lg:sticky lg:top-28">
           <p className="text-[13px] tracking-[0.25em] text-gold uppercase">The little details</p>
           <h2
@@ -96,7 +96,7 @@ export function FaqSection() {
           {faqs.map((faq, i) => (
             // name="faq": opening one question closes the others, no JavaScript needed.
             <details key={faq.question} name="faq" className="faq-item group border-b border-border">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center gap-4 py-5 transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center gap-4 py-4 md:py-5 transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
                 <span aria-hidden="true" className="w-6 shrink-0 text-xs text-gold tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>

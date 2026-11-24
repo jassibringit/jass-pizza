@@ -17,7 +17,7 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="how">
-      <div className="mx-auto max-w-7xl px-6 py-12 md:py-20">
+      <div className="mx-auto max-w-7xl px-6 py-10 md:py-20">
         <p className="text-[13px] tracking-[0.25em] text-gold uppercase">
           How it works
         </p>
@@ -25,7 +25,7 @@ export function HowItWorks() {
           You host. We handle the rest<span className="text-gold">.</span>
         </h2>
 
-        <ol className="mt-10 grid gap-10 md:mt-14 md:grid-cols-3 md:gap-8">
+        <ol className="mt-8 grid gap-8 md:mt-14 md:grid-cols-3 md:gap-8">
           {steps.map((step, i) => (
             <li key={step.title} className="reveal flex flex-col gap-3">
               <span className="font-display text-xl text-gold italic">
